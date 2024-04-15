@@ -113,41 +113,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="casa00025-group-project-title-here" class="level1 page-columns page-full">
-<h1>CASA00025 Group Project Title Here</h1>
+<section id="identifying-desertification-risk-areas-in-niger-and-the-southern-sahel-region" class="level1 page-columns page-full">
+<h1>Identifying desertification risk areas in Niger and the Southern Sahel region</h1>
 <section id="project-summary" class="level2">
 <h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
-<p>Fill in the sections below to provide a brief summary of your project. Each section should have no more than 100 words. Do not edit any of the headings.</p>
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
-<p>What is the problem you’re trying to address using this application?</p>
-<p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures and low rainfall, indicative of desertification. The shrinking arable land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land. The flagship project “Great Green Wall,” spanning 15km wide and 8000km long, targets 100 million hectares of degraded land restoration, carbon sequestration, and green job creation by 2030. Despite all the initiatives and the work being done there is lack of centralized visibility on desertification risk to mobilise the GGW action plan with urgency and systematically across diverse actors. (110 words)</p>
+<p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease of arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert. Most major initiatives in the fight against desertification converge on the flagship project “Great Green Wall,” spanning 15km wide and 8000km long, targeting 100 million hectares of degraded land restoration, carbon sequestration, and green job creation by 2030.</p>
+<p>However, as each task force operates independently, there is a lack of centralized visibility on desertification risks in the nation to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.</p>
 </section>
 <section id="end-user" class="level3">
 <h3 class="anchored" data-anchor-id="end-user">End User</h3>
-<p>Who are you building this application for? How does it address a need this community has?</p>
-<p>We are building this application for the local government, NGOs and the people involved in GGW initiative so that if there is a centralized platform where they can visualize to what extent desertification effect Niger people at high spatial resolution and with another layer which will highlight specific areas within the GGW path that are most suitable for planting trees. (60 words)</p>
+<p>This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralized platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.</p>
+<p>Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.</p>
 </section>
-<section id="data" class="level3">
-<h3 class="anchored" data-anchor-id="data">Data</h3>
-<p>What data are you using?</p>
-<p>For the purpose of land use land cover classification (LULC) and calculating vegetation and soil indices, we require Landsat 5, Landsat 7 ETM+, and Landsat 8 data. Additionally, for climate and rainfall data, we need MODIS Earth observation data.</p>
-<p>Furthermore, we need population density and distribution data, which we can obtain from WorldPop and Kontur.</p>
-<p>To calculate slope from elevation data, we require Shuttle Radar Topography Mission (SRTM) data to generate a near-global digital elevation model (DEM) of the Earth using radar interferometry.</p>
-<p>Moreover, we will utilize GGW shapefiles, which can be directly drawn using QGIS. (95 words)</p>
+<section id="data-source" class="level3">
+<h3 class="anchored" data-anchor-id="data-source">Data Source</h3>
+<p>To derive the <em>Desertification Index (</em>detailed methodology below), we will be using:</p>
+<ul>
+<li><p><strong>Landsat 8 data</strong> for hyperspectral remote sensing data</p></li>
+<li><p><strong>MODIS data</strong> for climate and rainfall data</p></li>
+</ul>
+<p>Furthermore, we need population density data, which can obtained as rasters from WorldPop.</p>
+<p>Finally, to delineate the boundaries of interest, we will utilize the following vector files:</p>
+<ul>
+<li><p><strong>Great Green Wall designated area</strong>, traced according to the Niger government’s Action Plan.</p></li>
+<li><p><strong>Niger Administrative Boundaries,</strong> Level 0 through 4 from GADM</p></li>
+</ul>
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
-<p>How are you using this data to address the problem?</p>
+<p>According to Wu et al.&nbsp;(2019), the Desertification Index is calculated using Landsat 8 and MODIS remote sensing data within the feature space of Albedo and Modified Soil Adjusted Vegetation Index (MSAVI). More specifically, the Desertification Monitoring Index (DMI) is defined as:</p>
+<p><span class="math display">\[ \Large DMI = L_2 = \frac{|{Albedo - \alpha MSAVI - \beta|}}{\sqrt{1+\alpha^2}} \]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-736368115.png" class="img-fluid figure-img" width="300"></p>
+</figure>
+</div>
+<p>The larger <span class="math inline">\(L_2\)</span> , the more degraded the soil is. The distance <span class="math inline">\(L_2\)</span> represents the distance of the tassel from the soil line <span class="math inline">\(L\)</span> , derived from the respective indices are calculated as follows:</p>
+<p><span class="math display">\[ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 \]</span></p>
+<p><span class="math display">\[ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 \]</span></p>
+<p>Lastly, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are the parameters of the regression equation for the soil line <span class="math inline">\(L\)</span> in the feature space.</p>
+<p><span class="math display">\[ Albedo = \alpha MSAVI + \beta  \]</span></p>
+<p>It is worth noting that this methodology has shown high accuracy in detecting and classifying desertification only in the Naiman Banner in Inner Mongolia (China) and not specifically in the Southern Sahel where Niger is located. However, due to the lack of ground truth data for the time being and the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate.</p>
 </section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
-<p>How does your application’s interface work to address the needs of your end user?</p>
+<p>First, the user picks the <em>year of interest</em> and a <em>year of comparison</em> in the past using a slider. This will produce two following layers:</p>
+<ul>
+<li><p>Desertification risk areas are shaded in 3 different levels of severity</p></li>
+<li><p>Areas that are newly desertified are shaded by the magnitude of change over the preset time range.</p></li>
+</ul>
+<p>To acquire statistics on the extent of human impact, the user not only can either choose a province of interest from the drop-down menu but they can also draw the area of interest using the tool provided. The statistics shown are population living in desertifying and desertified areas, also broken down by age range and gender</p>
 </section>
 </section>
 <section id="the-application" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-application">The Application</h2>
-<p>Replace the link below with the link to your application.</p>
 <div class="column-page">
 <iframe src="https://ollielballinger.users.earthengine.app/view/turkey-earthquake" width="100%" height="700px">
 </iframe>
@@ -169,6 +190,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>and math: <span class="math display">\[ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} \]</span></p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<p>Wen, Ye &amp; Guo, Bing &amp; Zang, Wenqian &amp; Ge, Dazhuan &amp; Luo, Wei &amp; Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.</p>
+<p>Wu, Z., Lei, S., Bian, Z.&nbsp;<em>et al.</em>&nbsp;Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region.&nbsp;<em>Environ Earth Sci</em>&nbsp;<strong>78</strong>, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9</p>
 
 
 </section>

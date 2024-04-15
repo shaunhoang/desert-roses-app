@@ -38,13 +38,13 @@ $$ \Large DMI = L_2 = \frac{|{Albedo - \alpha MSAVI - \beta|}}{\sqrt{1+\alpha^2}
 
 ![](images/clipboard-736368115.png){fig-align="center" width="300"}
 
-The larger $$L_2$$ , the more degraded the soil is. The distance $$L_2$$ represents the distance of the tassel from the soil line $$L$$ , derived from the respective indices are calculated as follows:
+The larger $L_2$ , the more degraded the soil is. The distance $L_2$ represents the distance of the tassel from the soil line $L$ , derived from the respective indices are calculated as follows:
 
 $$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$ 
 
 $$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$ 
 
-Lastly, $$\alpha$$ and $$\beta$$ are the parameters of the regression equation for the soil line L in the feature space.
+Lastly, $\alpha$ and $\beta$ are the parameters of the regression equation for the soil line $L$ in the feature space.
 
 $$ Albedo = \alpha MSAVI + \beta  $$ 
 
