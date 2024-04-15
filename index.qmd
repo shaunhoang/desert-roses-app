@@ -6,7 +6,9 @@
 
 ### Problem Statement
 
-Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease of arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert. Most major initiatives in the fight against desertification converge on the flagship project “Great Green Wall,” spanning 15km wide and 8000km long, targeting 100 million hectares of degraded land restoration, carbon sequestration, and green job creation by 2030.
+Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease of arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. 
+
+Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert. Most major initiatives in the fight against desertification converge on the flagship project **Great Green Wall**,spanning 15km wide and 8000km long, targeting 100 million hectares of degraded land restoration, carbon sequestration, and green job creation by 2030.
 
 However, as each task force operates independently, there is a lack of centralized visibility on desertification risks in the nation to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.
 
@@ -21,8 +23,6 @@ Future extensions of the tool include highlighting specific areas within the des
 To derive the *Desertification Index (*detailed methodology below), we will be using:
 
 -   **Landsat 8 data** for hyperspectral remote sensing data
-
--   **MODIS data** for climate and rainfall data
 
 Furthermore, we need population density data, which can obtained as rasters from WorldPop.
 
