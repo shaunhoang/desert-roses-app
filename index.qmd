@@ -16,7 +16,7 @@ However, as each task force operates independently, there is a lack of centraliz
 
 This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralized platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.
 
-Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.
+//Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.//
 
 ### Data Source
 
@@ -24,7 +24,9 @@ To derive the *Desertification Index (*detailed methodology below), we will be u
 
 -   **Landsat 8 data** for hyperspectral remote sensing data
 
-Furthermore, we need population density data, which can obtained as rasters from WorldPop.
+Furthermore, we need population density data, which can be obtained as rasters from WorldPop.
+
+| [Worldpop](https://developers.google.com/earth-engine/datasets/tags/worldpop)   for time 2000-2021  with 92m resolution and Global coverage.   
 
 Finally, to delineate the boundaries of interest, we will utilize the following vector files:
 
