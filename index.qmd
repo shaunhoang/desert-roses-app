@@ -6,9 +6,7 @@
 
 ### Problem Statement
 
-Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease of arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. 
-
-Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert. Most major initiatives in the fight against desertification converge on the flagship project **Great Green Wall**,spanning 15km wide and 8000km long, targeting 100 million hectares of degraded land restoration, carbon sequestration, and green job creation by 2030.
+Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.
 
 However, as each task force operates independently, there is a lack of centralized visibility on desertification risks in the nation to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.
 
@@ -16,53 +14,33 @@ However, as each task force operates independently, there is a lack of centraliz
 
 This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralized platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.
 
-//Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.//
+Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.
 
 ### Data Source
 
-To derive the *Desertification Index (*detailed methodology below), we will be using:
-
--   **Landsat 8 data** for hyperspectral remote sensing data
-
-Furthermore, we need population density data, which can be obtained as rasters from WorldPop.
-
-| [Worldpop](https://developers.google.com/earth-engine/datasets/tags/worldpop)   for time 2000-2021  with 92m resolution and Global coverage.   
-
-Finally, to delineate the boundaries of interest, we will utilize the following vector files:
-
--   **Great Green Wall designated area**, traced according to the Niger government's Action Plan.
-
--   **Niger Administrative Boundaries,** Level 0 through 4 from GADM
+To derive the *Desertification Index (*detailed methodology below), we used **Landsat 8 data** (2013-present) for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the **WorldPop global population raster data** at 100m resolution (2000-2020). Finally, to delineate the boundaries of interest, we will utilise **Niger Administrative Boundaries,** Level 0 through 2.
 
 ### Methodology
 
-According to Wu et al. (2019), the Desertification Index is calculated using Landsat 8 and MODIS remote sensing data within the feature space of Albedo and Modified Soil Adjusted Vegetation Index (MSAVI). More specifically, the Desertification Monitoring Index (DMI) is defined as:
+According to Wu et al. (2019), the Desertification Risk Index (DRI) can be calculated using Landsat 8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated.
 
-$$ \Large DMI = L_2 = \frac{|{Albedo - \alpha MSAVI - \beta|}}{\sqrt{1+\alpha^2}} $$
+$$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$
 
-![](images/clipboard-736368115.png){fig-align="center" width="300"}
+$$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$
 
-The larger $L_2$ , the more degraded the soil is. The distance $L_2$ represents the distance of the tassel from the soil line $L$ , derived from the respective indices are calculated as follows:
+The Desertification Risk Index (DRI) is then defined as:
 
-$$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$ 
+$$ DRI = L_1 = \sqrt{(MSAVI-1)^2 + Albedo^2} $$
 
-$$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$ 
-
-Lastly, $\alpha$ and $\beta$ are the parameters of the regression equation for the soil line $L$ in the feature space.
-
-$$ Albedo = \alpha MSAVI + \beta  $$ 
+![Larger DRI means more degraded soil and higher desertification risk](images/clipboard-449413320.png){fig-align="center"}
 
 It is worth noting that this methodology has shown high accuracy in detecting and classifying desertification only in the Naiman Banner in Inner Mongolia (China) and not specifically in the Southern Sahel where Niger is located. However, due to the lack of ground truth data for the time being and the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate.
 
 ### Interface
 
-First, the user picks the *year of interest* and a *year of comparison* in the past using a slider. This will produce two following layers:
+First, the user picks the *year of interest* using a slider. This will produce populated areas with high desertification risks.
 
--   Desertification risk areas are shaded in 3 different levels of severity
-
--   Areas that are newly desertified are shaded by the magnitude of change over the preset time range.
-
-To acquire statistics on the extent of human impact, the user not only can either choose a province of interest from the drop-down menu but they can also draw the area of interest using the tool provided. The statistics shown are population living in desertifying and desertified areas, also broken down by age range and gender
+To acquire statistics on the extent of human impact, the user cannot only choose a region of interest from the drop-down menu, or draw the area of interest using the tool provided to know the share of the populationchoose a region of interest from the drop-down menu but they can also draw the area of interest using the tool provided to know the population share that lives on degraded land, also broken down by age range and gender.
 
 ## The Application
 
@@ -94,4 +72,4 @@ and math: $$ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1
 
 Wen, Ye & Guo, Bing & Zang, Wenqian & Ge, Dazhuan & Luo, Wei & Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.
 
-Wu, Z., Lei, S., Bian, Z. *et al.* Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region. *Environ Earth Sci* **78**, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9
+Wu, Z., Lei, S., Bian, Z. *et al.* Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region. *Environ Earth Sci* 78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9
