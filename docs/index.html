@@ -180,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>How it Works</h1>
 <section id="calculating-desertification-risk-index-from-land-8-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-desertification-risk-index-from-land-8-dataset">Calculating Desertification Risk Index from Land-8 dataset</h3>
-<p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
+<p>Explain the DRI calculation + the transformation we made to normalise the indices…</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span></span>
@@ -189,11 +189,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="estimating-the-affected-population-using-the-worldpop-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="estimating-the-affected-population-using-the-worldpop-dataset">Estimating the affected population using the WorldPop dataset</h3>
-<p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
+<p>Explain the code to mask DRI layer + Population to identify high-risk populated areas to produce stats</p>
 </section>
 <section id="user-interface" class="level3">
 <h3 class="anchored" data-anchor-id="user-interface">User Interface</h3>
-<p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
+<p>Use this section to explain interactive components:</p>
+<ul>
+<li><p>Split panels</p></li>
+<li><p>Dropdown menu</p></li>
+<li><p>Draw polygons</p></li>
+</ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span>  <span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span>  <span class="kw">var</span> aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span>)<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">3000</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can include images:</p>
 <div class="quarto-figure quarto-figure-center">

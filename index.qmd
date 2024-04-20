@@ -54,7 +54,7 @@ First, the user picks the *year of interest* using a slider. This will produce p
 
 ### Calculating Desertification Risk Index from Land-8 dataset
 
-Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+Explain the DRI calculation + the transformation we made to normalise the indices...
 
 ``` js
 Map.setCenter(35.51898, 33.90153, 15);
@@ -66,11 +66,17 @@ var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
 
 ### Estimating the affected population using the WorldPop dataset
 
-Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+Explain the code to mask DRI layer + Population to identify high-risk populated areas to produce stats
 
 ### User Interface
 
-Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+Use this section to explain interactive components:
+
+-   Split panels
+
+-   Dropdown menu
+
+-   Draw polygons
 
 ``` js
 Map.setCenter(35.51898, 33.90153, 15);  Map.setOptions("satellite");  var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
