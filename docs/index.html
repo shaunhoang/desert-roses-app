@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>index</title>
+<title>Project Desert Rose - Identifying desertification risk areas in Niger</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,11 +69,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -111,26 +111,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Project Desert Rose - Identifying desertification risk areas in Niger</h1>
+</div>
 
 
-<section id="identifying-nigers-desertification-risk-areas" class="level1 page-columns page-full">
-<h1>Identifying Niger’s desertification risk areas</h1>
-<p><img src="images/clipboard-1539470982.png" class="img-fluid"></p>
-<section id="project-summary" class="level2">
-<h2 class="anchored" data-anchor-id="project-summary">Project Summary</h2>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3098452386.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<section id="project-summary" class="level1">
+<h1>Project Summary</h1>
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
 <p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.</p>
-<p>However, as each task force operates independently, there is a lack of centralized visibility on desertification risks in the nation to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.</p>
+<p>However, as each task force operates independently, the nation lacks centralised visibility on desertification risks to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.</p>
 </section>
 <section id="end-user" class="level3">
 <h3 class="anchored" data-anchor-id="end-user">End User</h3>
-<p>This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralized platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.</p>
+<p>This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.</p>
 <p>Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.</p>
 </section>
 <section id="data-source" class="level3">
 <h3 class="anchored" data-anchor-id="data-source">Data Source</h3>
-<p>To derive the <em>Desertification Index (</em>detailed methodology below), we used <strong>Landsat 8 data</strong> (2013-present) for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the <strong>WorldPop global population raster data</strong> at 100m resolution (2000-2020). Finally, to delineate the boundaries of interest, we will utilise <strong>Niger Administrative Boundaries,</strong> Level 0 through 2.</p>
+<p>To derive the <em>Desertification Index (</em>detailed methodology below), we used <em>Landsat 8 OLI data (2013-present)</em> for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the <em>WorldPop global population raster data at 100m resolution (2000-2020</em>). Finally, to delineate the boundaries of interest, we will use <em>Niger Administrative Boundaries, Level 0 through 2.</em></p>
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
@@ -142,48 +159,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-449413320.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Larger DRI means more degraded soil and higher desertification risk</figcaption>
+<figcaption class="figure-caption">A larger DRI means more degraded soil and higher desertification risk.</figcaption>
 </figure>
 </div>
-<p>It is worth noting that this methodology has shown high accuracy in detecting and classifying desertification only in the Naiman Banner in Inner Mongolia (China) and not specifically in the Southern Sahel where Niger is located. However, due to the lack of ground truth data for the time being and the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate.</p>
+<p>It is worth noting that this methodology has shown relatively high accuracy in detecting and classifying desertification in the Naiman Banner in Inner Mongolia (China) but not specifically in the Southern Sahel where Niger is located. However, thanks to the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate for the Southern Sahel region.</p>
 </section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
-<p>First, the user picks the <em>year of interest</em> using a slider. This will produce populated areas with high desertification risks.</p>
-<p>To acquire statistics on the extent of human impact, the user cannot only choose a region of interest from the drop-down menu, or draw the area of interest using the tool provided to know the share of the populationchoose a region of interest from the drop-down menu but they can also draw the area of interest using the tool provided to know the population share that lives on degraded land, also broken down by age range and gender.</p>
+<p>First, the user picks the <em>year of interest</em> using a slider. This will produce populated areas with high desertification risks. To acquire statistics on the extent of human impact, the user can choose a <em>region of interest</em> from the drop-down menu or draw the area of interest using the tool provided, to know the population share that lives on degraded land.</p>
 </section>
 </section>
-<section id="the-application" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="the-application">The Application</h2>
+<section id="the-application" class="level1 page-columns page-full">
+<h1>The Application</h1>
 <div class="column-page">
-<iframe src="https://ollielballinger.users.earthengine.app/view/turkey-earthquake" width="100%" height="700px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
 </iframe>
 </div>
 </section>
-<section id="how-it-works" class="level2">
-<h2 class="anchored" data-anchor-id="how-it-works">How it Works</h2>
+<section id="how-it-works" class="level1">
+<h1>How it Works</h1>
+<section id="calculating-desertification-risk-index-from-land-8-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-desertification-risk-index-from-land-8-dataset">Calculating Desertification Risk Index from Land-8 dataset</h3>
 <p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span>)<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">3000</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="estimating-the-affected-population-using-the-worldpop-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-the-affected-population-using-the-worldpop-dataset">Estimating the affected population using the WorldPop dataset</h3>
+<p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
+</section>
+<section id="user-interface" class="level3">
+<h3 class="anchored" data-anchor-id="user-interface">User Interface</h3>
+<p>Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span>  <span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span>  <span class="kw">var</span> aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span>)<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">3000</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can include images:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/beirut_change_2020.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Pixelwise T-Test, 2018</figcaption>
+<p><img src="images/Screenshot 2024-04-19 205034.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<p>and math: <span class="math display">\[ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} \]</span></p>
 </section>
-<section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 <p>Wen, Ye &amp; Guo, Bing &amp; Zang, Wenqian &amp; Ge, Dazhuan &amp; Luo, Wei &amp; Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.</p>
 <p>Wu, Z., Lei, S., Bian, Z.&nbsp;<em>et al.</em>&nbsp;Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region.&nbsp;<em>Environ Earth Sci</em>&nbsp;78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -296,7 +321,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'alternate';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 

@@ -1,24 +1,26 @@
-# Identifying Niger's desertification risk areas
+---
+title: Project Desert Rose - Identifying desertification risk areas in Niger
+---
 
-![](images/clipboard-1539470982.png)
+![](images/clipboard-3098452386.png){fig-align="center"}
 
-## Project Summary
+# Project Summary
 
 ### Problem Statement
 
 Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.
 
-However, as each task force operates independently, there is a lack of centralized visibility on desertification risks in the nation to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.
+However, as each task force operates independently, the nation lacks centralised visibility on desertification risks to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.
 
 ### End User
 
-This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralized platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.
+This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.
 
 Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.
 
 ### Data Source
 
-To derive the *Desertification Index (*detailed methodology below), we used **Landsat 8 data** (2013-present) for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the **WorldPop global population raster data** at 100m resolution (2000-2020). Finally, to delineate the boundaries of interest, we will utilise **Niger Administrative Boundaries,** Level 0 through 2.
+To derive the *Desertification Index (*detailed methodology below), we used *Landsat 8 OLI data (2013-present)* for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the *WorldPop global population raster data at 100m resolution (2000-2020*). Finally, to delineate the boundaries of interest, we will use *Niger Administrative Boundaries, Level 0 through 2.*
 
 ### Methodology
 
@@ -32,25 +34,25 @@ The Desertification Risk Index (DRI) is then defined as:
 
 $$ DRI = L_1 = \sqrt{(MSAVI-1)^2 + Albedo^2} $$
 
-![Larger DRI means more degraded soil and higher desertification risk](images/clipboard-449413320.png){fig-align="center"}
+![A larger DRI means more degraded soil and higher desertification risk.](images/clipboard-449413320.png){fig-align="center"}
 
-It is worth noting that this methodology has shown high accuracy in detecting and classifying desertification only in the Naiman Banner in Inner Mongolia (China) and not specifically in the Southern Sahel where Niger is located. However, due to the lack of ground truth data for the time being and the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate.
+It is worth noting that this methodology has shown relatively high accuracy in detecting and classifying desertification in the Naiman Banner in Inner Mongolia (China) but not specifically in the Southern Sahel where Niger is located. However, thanks to the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate for the Southern Sahel region.
 
 ### Interface
 
-First, the user picks the *year of interest* using a slider. This will produce populated areas with high desertification risks.
+First, the user picks the *year of interest* using a slider. This will produce populated areas with high desertification risks. To acquire statistics on the extent of human impact, the user can choose a *region of interest* from the drop-down menu or draw the area of interest using the tool provided, to know the population share that lives on degraded land.
 
-To acquire statistics on the extent of human impact, the user cannot only choose a region of interest from the drop-down menu, or draw the area of interest using the tool provided to know the share of the populationchoose a region of interest from the drop-down menu but they can also draw the area of interest using the tool provided to know the population share that lives on degraded land, also broken down by age range and gender.
-
-## The Application
+# The Application
 
 ::: column-page
-<iframe src="https://ollielballinger.users.earthengine.app/view/turkey-earthquake" width="100%" height="700px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
 
 </iframe>
 :::
 
-## How it Works
+# How it Works
+
+### Calculating Desertification Risk Index from Land-8 dataset
 
 Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
 
@@ -62,13 +64,23 @@ Map.setOptions("satellite");
 var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
 ```
 
+### Estimating the affected population using the WorldPop dataset
+
+Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+
+### User Interface
+
+Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+
+``` js
+Map.setCenter(35.51898, 33.90153, 15);  Map.setOptions("satellite");  var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
+```
+
 You can include images:
 
-![Pixelwise T-Test, 2018](images/beirut_change_2020.jpg)
+![](images/Screenshot%202024-04-19%20205034.png){fig-align="center"}
 
-and math: $$ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} $$
-
-## Reference
+# References
 
 Wen, Ye & Guo, Bing & Zang, Wenqian & Ge, Dazhuan & Luo, Wei & Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.
 
