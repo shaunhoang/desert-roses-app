@@ -4,7 +4,7 @@ title: Project Desert Rose - Identifying desertification risk areas in Niger
 
 ![](images/clipboard-3098452386.png){fig-align="center"}
 
-# Project Summary
+# I. Overview
 
 ### Problem Statement
 
@@ -48,7 +48,7 @@ The user can select the *year of interest* and then the *area of interest* to pr
 
 Finally, other layers of interest are (1) Population density in high-risk areas, (2) DRI nationwide in the year of choice, and (3) Change in DRI nationwide 2014-2023.
 
-# The Application
+# II. The Application
 
 ::: column-page
 <iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
@@ -56,11 +56,11 @@ Finally, other layers of interest are (1) Population density in high-risk areas,
 </iframe>
 :::
 
-# The code behind the scene
+# III. The code behind the scene
 
 Here are some highlights of what goes on behind the scene of the web app.
 
-### Calculating Desertification Risk Index from Land-8 dataset
+### Calculating Desertification Risk Index 2014-2023 from Land-8 dataset
 
 First, we load the necessary Landsat 8 collection and the boundaries of Niger (level 1 and 0)
 
@@ -98,119 +98,141 @@ The code below creates a function, which performs the calculation of DRI for the
 
 ``` js
 // Function to calculate DRI
-var calculateIndices = function(image){
-  // Calculate MSAVI
-  var msavi = image.expression(
-    '(((2 * B5 + 1 - sqrt((2 * B5 + 1)**2 - 8 * (B5 - B4))) / 2) +1)/2', {
-      'B5': image.select('SR_B5'), // NIR
-      'B4': image.select('SR_B4')  // Red
-    }).rename('msavi');
+var calculateIndices = function(image) {
+    // Calculate MSAVI
+    var msavi = image.expression(
+        '(((2 * B5 + 1 - sqrt((2 * B5 + 1)**2 - 8 * (B5 - B4))) / 2) +1)/2', {
+            'B5': image.select('SR_B5'), // NIR
+            'B4': image.select('SR_B4') // Red
+        }).rename('msavi');
     // MSAVI is the Modified Soil Adjusted Vegetation Index; minimizes the effect of bare soil on the SAVI. Refer to Yang et al (2022).
     // This equation modifies the typical equation to account for the typical MSAVI range being -1:1; this adapts it to 0:1 by adding 1 to the value and dividing by 2. 
-  
-  // Calculate Albedo
-  var albedo = image.expression(
-    '((0.356*B2) + (0.130*B4) + (0.373*B5) + (0.085*B6) + (0.072*B7) - 0.0018)*0.0000275 - 0.2', { // adjustments normalise the index to be 0 to 1
-      'B2': image.select('SR_B2'), // Blue
-      'B4': image.select('SR_B4'), // Red
-      'B5': image.select('SR_B5'), // NIR
-      'B6': image.select('SR_B6'), // SWIR1
-      'B7': image.select('SR_B7')  // SWIR2
-    }).rename('albedo');
+
+    // Calculate Albedo
+    var albedo = image.expression(
+        '((0.356*B2) + (0.130*B4) + (0.373*B5) + (0.085*B6) + (0.072*B7) - 0.0018)*0.0000275 - 0.2', { // adjustments normalise the index to be 0 to 1
+            'B2': image.select('SR_B2'), // Blue
+            'B4': image.select('SR_B4'), // Red
+            'B5': image.select('SR_B5'), // NIR
+            'B6': image.select('SR_B6'), // SWIR1
+            'B7': image.select('SR_B7') // SWIR2
+        }).rename('albedo');
     // ALbedo gives the proportion of the incident light or radiation that is reflected by a surface. Refer to Yang et al (2022).
 
-  // Calculate DRI
-  var dri = image.expression(
-    'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )', {
-      'MSAVI': msavi, // Use the MSAVI band calculated previously
-      'Albedo': albedo // Use the Albedo band calculated previously
-    }).rename('DRI');
+    // Calculate DRI
+    var dri = image.expression(
+        'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )', {
+            'MSAVI': msavi, // Use the MSAVI band calculated previously
+            'Albedo': albedo // Use the Albedo band calculated previously
+        }).rename('DRI');
     // DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula
-    
-  // Return the image with added DRI band
-  return image.addBands([dri, msavi, albedo]).clip(nigerGeometry);
+
+    // Return the image with added DRI band
+    return image.addBands([dri, msavi, albedo]).clip(nigerGeometry);
 };
 ```
 
-Before we applied this function to the collection, we decided to simplify the collection to one image per year to reduce load time whenever a query is made. After we applied the index calculation, we masked out DRI values less than 0.5 to highlight areas with high risk of desertification. We also added a legend for the DRI value with a colour scale.
+Before we applied this function to the collection, we decided to simplify the collection to one image per year to reduce load time whenever a query is made.
 
 ``` js
 // Simplify collection to years (median) and calculate indices 
 var distinctYears = ee.List.sequence(2014, 2023);
 
 function annualComposite(year, month) {
-  var filteredImages = composite.filter(ee.Filter.calendarRange(year, year, 'year'))
-  return filteredImages.median().set({ 'year': year, 'system:time_start': ee.Date.fromYMD(year, 1, 1)} ); 
+    var filteredImages = composite.filter(ee.Filter.calendarRange(year, year, 'year'))
+    return filteredImages.median().set({
+        'year': year,
+        'system:time_start': ee.Date.fromYMD(year, 1, 1)
+    });
 }
 
 var composite_annual = ee.ImageCollection.fromImages(
-       distinctYears.map(function(year) {
-         return annualComposite(year);
-       }).flatten()
+    distinctYears.map(function(year) {
+        return annualComposite(year);
+    }).flatten()
 ).map(calculateIndices);
+```
 
+After we applied the index calculation, we masked out DRI values less than 0.5 to highlight areas with high risk of desertification.
+
+``` js
 // Mask images based on DRI values, highlighted high DRI areas only
 function maskByDRI(image) {
-  var driMask = image.select('DRI').gte(0.5); 
-  return image.updateMask(driMask);
+    var driMask = image.select('DRI').gte(0.5);
+    return image.updateMask(driMask);
 }
 var composite_annual_masked = composite_annual.map(maskByDRI);
 ```
 
-![](images/clipboard-2006573240.png){fig-align="center" width="379"}
+We also added a legend for the DRI value with a colour scale.
 
 ``` javascript
 // Color palette to viz params function
 function makeColorBarParams(palette) {
-  return {
-    bbox: [0, 0, 1, 0.1],
-    dimensions: "100x10",
-    format: "png",
-    min: 0,
-    max: 1,
-    palette: palette.reverse(),
-  };
+    return {
+        bbox: [0, 0, 1, 0.1],
+        dimensions: "100x10",
+        format: "png",
+        min: 0,
+        max: 1,
+        palette: palette.reverse(),
+    };
 }
 
 // Create the color bar for the legend.
 var colorBar = ui.Thumbnail({
-  image: ee.Image.pixelLonLat().select(0),
-  params: makeColorBarParams(colorlist.reverse()),
-  style: { stretch: "horizontal", margin: "0px 2px", maxHeight: "18px" },
+    image: ee.Image.pixelLonLat().select(0),
+    params: makeColorBarParams(colorlist.reverse()),
+    style: {
+        stretch: "horizontal",
+        margin: "0px 2px",
+        maxHeight: "18px"
+    },
 });
 
 // Create title
 var legendTitle = ui.Label({
-  value: "Desertification Risk Index (DRI)",
-  style: { fontWeight: "bold" ,textAlign: "center",stretch: "horizontal"},
+    value: "Desertification Risk Index (DRI)",
+    style: {
+        fontWeight: "bold",
+        textAlign: "center",
+        stretch: "horizontal"
+    },
 });
 
 // Create labels
 var legendLabels = ui.Panel({
-  widgets: [
-    ui.Label('Low', { margin: "4px 4px" }),
-    ui.Label( " ", {
-      margin: "4px 4px",
-      textAlign: "center",
-      stretch: "horizontal",
-    }),
-    ui.Label('High', { margin: "4px 4px" }),
-  ],
-  layout: ui.Panel.Layout.flow("horizontal"),
+    widgets: [
+        ui.Label('Low', {
+            margin: "4px 4px"
+        }),
+        ui.Label(" ", {
+            margin: "4px 4px",
+            textAlign: "center",
+            stretch: "horizontal",
+        }),
+        ui.Label('High', {
+            margin: "4px 4px"
+        }),
+    ],
+    layout: ui.Panel.Layout.flow("horizontal"),
 });
 
 // Put everything together and add to map
 var legendPanel = ui.Panel({
-  widgets: [legendTitle, colorBar, legendLabels],
-  style: { position: "bottom-center", width: "300px"},
+    widgets: [legendTitle, colorBar, legendLabels],
+    style: {
+        position: "bottom-center",
+        width: "300px"
+    },
 });
 
 Map.add(legendPanel)
 ```
 
-![](images/clipboard-864733451.png){fig-align="center" width="258"}
+![High DRI areas nationwide with values below 0.5 masked out](images/clipboard-503500441.png){fig-align="center" width="1000"}
 
-Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer (more white means higher increase in DRI), it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.
+Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer, it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.
 
 ``` javascript
 // Difference in DRI between 2023 and 2014
@@ -219,11 +241,10 @@ var image2023 = composite_annual.select('DRI').filterDate('2023-01-01', '2023-12
 
 // Calculate the difference image
 var differenceImage = image2023.subtract(image2014);
-var diff_img = differenceImage.updateMask(differenceImage.gt(0.01).or(differenceImage.lt(-0.01)
-));
+var diff_img = differenceImage.updateMask(differenceImage.gt(0.01).or(differenceImage.lt(-0.01)));
 ```
 
-![](images/clipboard-2172427467.png){fig-align="center" width="383"}
+![Change in DRI 2014-2023. Lighter pixels see a higher increase in DRI, while darker ones see a decrease in DRI.](images/clipboard-2172427467.png){fig-align="center" width="1000"}
 
 ### Estimating the affected population using the WorldPop dataset
 
@@ -232,47 +253,47 @@ Showing the desertification level layer alone is not insightful for the user as 
 ``` javascript
 // Population Raster from WorldPop
 var pop_agesex = ee.ImageCollection('WorldPop/GP/100m/pop_age_sex')
-          .filter(ee.Filter.eq('country', 'NER'))
-          .filter(ee.Filter.calendarRange(2020, 2020, 'year')) //2020 latest year for WorldPop 
+    .filter(ee.Filter.eq('country', 'NER'))
+    .filter(ee.Filter.calendarRange(2020, 2020, 'year')) //2020 latest year
 
 // Mask out uninhabited land
 function maskZeroValues(image) {
-  return image.updateMask(image.select('population').gt(0.025)); // Mask where values 
+    return image.updateMask(image.select('population').gt(0.025)); // Hide low values 
 }
 var pop_agesex_masked = pop_agesex.map(maskZeroValues);
 
-
 // Find intersection (affected population)
 var dri_masked = composite_annual_masked.select('DRI')
-                   .filter(ee.Filter.eq('year',2023))
-                   .first(); // Default year 2023
-                   
+    .filter(ee.Filter.eq('year', 2023))
+    .first(); // Default year 2023
+
 // Create intersection image for population density
-var intersectionMask = pop_agesex_masked.first().mask().and(dri_masked.mask()); 
+var intersectionMask = pop_agesex_masked.first().mask().and(dri_masked.mask());
 var intersectionImage = pop_agesex_masked.first().updateMask(intersectionMask);
+
 // Create intersection image for DRI
-var intersectionMask_DRI = dri_masked.mask().and(pop_agesex_masked.select('population').first().mask()); 
+var intersectionMask_DRI = dri_masked.mask().and(pop_agesex_masked.select('population').first().mask());
 var intersectionImage_DRI = dri_masked.updateMask(intersectionMask_DRI);
 ```
 
 This code results in the creation of 2 layers that highlight the extent of desertification specifically in populated areas, one shows the DRI values and the other shows the population density.
 
-![Desertification in populated areas (i.e. High-risk areas). Left: By DRI values . Right: By Population Density.](images/clipboard-3677790972.png){width="1285"}
+![Desertification in populated areas (i.e. High-risk areas). Left: By DRI values . Right: By Population Density.](images/clipboard-3677790972.png){width="1000"}
 
-### Statistics and graphs for the year and area of interest
+### Statistics and graphs for the Year and Area of interest
 
-Besides producing the layers, the app affords users with key interaction components such as zooming into the year and area of interest, from which relevant stats and graphs are produced. For the interface we used a split-panel approach.
+Besides producing the layers, the app affords users with key interaction components such as zooming into the year and area of interest, from which relevant stats and graphs are produced. Note that the code examples below are not comprehensive and serve only to highlight key components of the UI.
 
-The left-hand panel allows the user to pick the year of interest via a slider
+For the interface we used a split-panel approach. The *left-hand panel* allows the user to pick the **year of interest** via a slider
 
 ``` js
 // Create the Year Slider
-var YearLabel = ui.Label('Year');
-var Yearslider = ui.Slider({min:2014, 
-                            max:2023, 
-                            value:2023, 
-                            step:1,
-                            onChange: updateLayer
+var Yearslider = ui.Slider({
+    min: 2014,
+    max: 2023,
+    value: 2023,
+    step: 1,
+    onChange: updateLayer
 });
 Yearslider.style().set('stretch', 'horizontal');
 
@@ -280,53 +301,55 @@ Yearslider.style().set('stretch', 'horizontal');
 function updateLayer() {
     var selectedYear = Yearslider.getValue(); // Get the full date object
     var filteredImage_DRI = composite_annual_masked.select('DRI')
-                          .filter(ee.Filter.eq('year',selectedYear))
-                          .first();
-    var intersectionMask = pop_agesex_masked.first().mask().and(dri_masked.mask()); 
+        .filter(ee.Filter.eq('year', selectedYear))
+        .first();
+    var intersectionMask = pop_agesex_masked.first().mask().and(dri_masked.mask());
     var intersectionImage = pop_agesex_masked.first().updateMask(intersectionMask);
-  
-  // Update the existing layer every time a new year is chosen
-    Map.layers().set(0, ui.Map.Layer(intersectionImage,{}, 'High-risk areas (Pop. Density) in '+selectedYear,false));
-    Map.layers().set(1, ui.Map.Layer(intersectionImage_DRI.select('DRI'),driVisParams, 'High-risk areas (DRI) in '+selectedYear));
-    Map.layers().set(2, ui.Map.Layer(filteredImage_DRI.reduce(ee.Reducer.mean()), driVisParams,'Overall Desertification Level in '+selectedYear,false));
+
+    // Update the existing layer every time a new year is chosen
+    Map.layers().set(0, ui.Map.Layer(intersectionImage, {}, 'High-risk areas (Pop. Density) in ' + selectedYear, false));
+    Map.layers().set(1, ui.Map.Layer(intersectionImage_DRI.select('DRI'), driVisParams, 'High-risk areas (DRI) in ' + selectedYear));
+    Map.layers().set(2, ui.Map.Layer(filteredImage_DRI.reduce(ee.Reducer.mean()), driVisParams, 'Overall Desertification Level in ' + selectedYear, false));
 }
 ```
 
-The left-hand panel also enables the user to select an area of interest in one of two ways:
+It also enables the user to select an **area of interest** in one of two ways:
 
-1.  The dropdown menu allows you to click on one of the 8 administrative regions within the country
+1.  The *dropdown menu* allows you to click on one of the 8 administrative regions within the country
 
 ``` js
 // Extract names
 var namesList = niger_1.aggregate_array('ADM1_NAME').getInfo();
-namesList = namesList.filter(function(name){return name !==null && name !=="";});
+namesList = namesList.filter(function(name) {
+    return name !== null && name !== "";
+});
 // Create dropdown 
 var dropdown_menu = ui.Select({
     items: namesList,
     placeholder: 'Select a region',
-    onChange: function(selectedName){
-      if(!selectedName){
-        print('No region selected or invalid selection.');
-        return;
-      }
-      var selectedFeature = niger_1.filter(ee.Filter.eq('ADM1_NAME',selectedName));
-          
-      selectedFeature.geometry().evaluate(function(geometry){
-      //zoom to the region
-          Map.centerObject(ee.Geometry(geometry),6.5);
-          //highlight the selected region
-          var region_outline = ee.Image().byte().paint({
-                                featureCollection: selectedFeature,
-                                width: 2,
-                                color: 'purple'
-                                });
-          Map.layers().set(5, ui.Map.Layer(region_outline,{}, 'Region: '+ selectedName));
-      });
+    onChange: function(selectedName) {
+        if (!selectedName) {
+            print('No region selected or invalid selection.');
+            return;
+        }
+        var selectedFeature = niger_1.filter(ee.Filter.eq('ADM1_NAME', selectedName));
+
+        selectedFeature.geometry().evaluate(function(geometry) {
+            //zoom to the region
+            Map.centerObject(ee.Geometry(geometry), 6.5);
+            //highlight the selected region
+            var region_outline = ee.Image().byte().paint({
+                featureCollection: selectedFeature,
+                width: 2,
+                color: 'purple'
+            });
+            Map.layers().set(5, ui.Map.Layer(region_outline, {}, 'Region: ' + selectedName));
+        });
     }
 });
 ```
 
-2.  The user can choose to draw a point-based polygon directly onto the map to zoom into particular areas that are otherwise not distinguishable by region. This is complete with a Clear button to remove the drawn polygon, and a Reset button to reset everything to the initial state.
+2.  The user can choose to *draw a point-based polygon* directly onto the map to zoom into particular areas that are otherwise not distinguishable by region.
 
 ``` js
 // Add in draw polygon feature
@@ -334,142 +357,164 @@ var drawingTools = Map.drawingTools();
 drawingTools.setShown(false);
 
 var drawButton = ui.Button({
-  label: "✏️" + " Draw an area",
-  onClick: drawPolygon,
-  style: { stretch: "horizontal",color:'F08F42' }
+    label: "✏️" + " Draw an area",
+    onClick: drawPolygon,
+    style: {
+        stretch: "horizontal",
+        color: 'F08F42'
+    }
 });
 
 function drawPolygon() {
-          // Clear geoms
-          var layers = Map.drawingTools().layers();
-          layers.reset()
-          // draw
-          drawingTools.setShape("polygon");
-          drawingTools.draw();
+    // Clear geoms
+    var layers = Map.drawingTools().layers();
+    layers.reset()
+        // draw
+    drawingTools.setShape("polygon");
+    drawingTools.draw();
 }
+```
 
+Once an area of interest has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
+
+``` js
+// Set a callback function for when the user selects a boundary
+dropdown.widgets().get(1).onChange(function(selectedName) {
+    if (!selectedName) {
+        print('No region selected or invalid selection.');
+        return;
+    }
+
+    var selectedBoundary = niger_1.filter(ee.Filter.eq('ADM1_NAME', selectedName));
+
+    selectedBoundary.geometry().evaluate(function(geometry) {
+        //Chart of DRI over time
+        var chart1 = ui.Chart.image.series({
+            imageCollection: composite_annual.select('DRI'),
+            region: ee.Geometry(geometry),
+            reducer: ee.Reducer.mean(),
+            scale: 3000,
+        }).setOptions({
+            title: 'DRI change over time',
+            vAxis: {
+                title: 'DRI'
+            },
+            lineWidth: 1,
+            color: 'E35F27',
+            pointSize: 3,
+        });
+
+        // Chart of population over time for the selected region.
+        var chart2 = ui.Chart.image.series({
+                imageCollection: pop_masked,
+                region: ee.Geometry(geometry),
+                reducer: ee.Reducer.sum(),
+                scale: 300,
+                xProperty: 'year'
+            }).setSeriesNames(['Pop'])
+            .setOptions({
+                title: 'Population growth in selected area',
+                vAxis: {
+                    title: 'Population'
+                },
+                hAxis: {
+                    title: 'Year'
+                },
+                lineWidth: 1,
+                pointSize: 3,
+                series: {
+                    0: {
+                        color: 'orange'
+                    }
+                }
+            });
+
+        // Print the avg DRI value
+        var driValue = composite_annual
+            .filter(ee.Filter.eq('year', Yearslider.getValue()))
+            .median()
+            .reduceRegion({
+                reducer: ee.Reducer.mean(),
+                geometry: ee.Geometry(geometry),
+                scale: 3000,
+                bestEffort: true
+            })
+            .get('DRI');
+        var round_driValue = (ee.Number(driValue).multiply(1000)).round().divide(1000).getInfo()
+
+
+        // Print the affected pop value
+        var sum_pop_affected = intersectionImage.reduceRegion({
+            reducer: ee.Reducer.sum(),
+            geometry: ee.Geometry(geometry),
+            scale: 100, // Adjust scale to 100 to fit WorldPop resolution
+            maxPixels: 1e13,
+            bestEffort: true
+        });
+        print('Total population affected:', sum_pop_affected);
+
+        // Print the pop value
+        var sum_pop = pop_agesex.median().reduceRegion({
+            reducer: ee.Reducer.sum(),
+            geometry: ee.Geometry(geometry),
+            scale: 100, // Adjust scale to 100 to fit WorldPop resolution
+            maxPixels: 1e13,
+            bestEffort: true
+        });
+        print('Total population:', sum_pop);
+
+        var pct_affected = ee.Number(sum_pop_affected.get('population'))
+            .divide(ee.Number(sum_pop.get('population')))
+            .multiply(10000).round() // Round to 2 decimal places
+            .divide(100); // get %
+        print(pct_affected);
+
+
+        // Add/replace widget
+        rightPanel.widgets().set(2, ui.Label('Selected region: ' + selectedName));
+        rightPanel.widgets().set(3, ui.Label('Average DRI in ' + Yearslider.getValue() + ' is ' + round_driValue));
+        rightPanel.widgets().set(4, ui.Label(pct_affected.getInfo() + '% of the population in ' + selectedName + ' live on highly degraded land (DRI > 0.5)'));
+        rightPanel.widgets().set(5, chart1);
+        rightPanel.widgets().set(6, chart2);
+    });
+});
+```
+
+Last but not least, we created a **Clear** button to remove the drawn polygon, and a **Reset** button to reset the map to the initial state.
+
+``` javascript
 // Add Clear Geom button
 var clearButton = ui.Button({
-  label: 'Clear',
-  onClick: clearGeometryAndDisableDrawing
+    label: 'Clear',
+    onClick: clearGeometryAndDisableDrawing
 });
+
 function clearGeometryAndDisableDrawing() {
-  var layers = Map.drawingTools().layers();
-  layers.reset();
-  Map.drawingTools().setShape(null);
+    var layers = Map.drawingTools().layers();
+    layers.reset();
+    Map.drawingTools().setShape(null);
 }
 
 // Add Reset button to initial state
 var resetButton = ui.Button({
-  label: 'Reset',
-  onClick: reset
+    label: 'Reset',
+    onClick: reset
 });
+
 function reset() {
-  var layerToRemove = Map.layers().get(5)
-  if(layerToRemove){Map.remove(layerToRemove)}
-  dropdown_menu.setValue(null);
-  Map.centerObject(niger, 5);
-  clearGeometryAndDisableDrawing()
+    var layerToRemove = Map.layers().get(5)
+    if (layerToRemove) {
+        Map.remove(layerToRemove)
+    }
+    dropdown_menu.setValue(null);
+    Map.centerObject(niger, 5);
+    clearGeometryAndDisableDrawing()
 }
 ```
 
-Once an area of interest has been identified, the right-hand panel will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The example below is the callback function for the dropdown menu, sharing similar callbacks as the drawing tool.
+![The app's UI after the year and area of interest have been indicated](images/clipboard-3754887948.png){fig-align="center" width="2504"}
 
-``` js
-// Set a callback function for when the user selects a boundary
-dropdown.widgets().get(1).onChange(function(selectedName){
-  if(!selectedName){
-  print('No region selected or invalid selection.');
-  return;}
-  
-  var selectedBoundary = niger_1.filter(ee.Filter.eq('ADM1_NAME', selectedName));
-  
-  selectedBoundary.geometry().evaluate(function(geometry){
-      //Chart of DRI over time
-      var chart1 = ui.Chart.image.series({
-        imageCollection:composite_annual.select('DRI'),
-        region: ee.Geometry(geometry),
-        reducer: ee.Reducer.mean(),
-        scale: 3000,
-      }).setOptions({
-        title: 'DRI change over time',
-        vAxis:{title: 'DRI'},
-        lineWidth: 1,
-        color: 'E35F27',
-        pointSize: 3,
-      });
-        
-      // Chart of population over time for the selected region.
-      var chart2 = ui.Chart.image.series({
-          imageCollection: pop_masked, 
-          region: ee.Geometry(geometry), 
-          reducer: ee.Reducer.sum(),
-          scale: 300,
-          xProperty: 'year'
-        }).setSeriesNames(['Pop']) 
-          .setOptions({
-          title: 'Population growth in selected area',
-          vAxis: {title: 'Population'},
-          hAxis: {title: 'Year'},
-          lineWidth: 1,
-          pointSize: 3,
-          series: {
-          0: {color: 'orange'} 
-          }
-        });
-      
-      // Print the avg DRI value
-      var driValue = composite_annual
-                              .filter(ee.Filter.eq('year',Yearslider.getValue())) // selected year
-                              .median()
-                              .reduceRegion({
-                                            reducer:ee.Reducer.mean(),
-                                            geometry: ee.Geometry(geometry),
-                                            scale: 3000,
-                                            bestEffort: true
-                                            })
-                              .get('DRI');
-      var round_driValue= (ee.Number(driValue).multiply(1000)).round().divide(1000).getInfo()
-      
-      
-      // Print the affected pop value
-      var sum_pop_affected = intersectionImage.reduceRegion({
-        reducer: ee.Reducer.sum(),
-        geometry: ee.Geometry(geometry),
-        scale: 100, // Adjust scale to 100 to fit WorldPop resolution
-        maxPixels: 1e13,
-        bestEffort: true
-      });
-      print('Total population affected:',sum_pop_affected);
-      
-      // Print the pop value
-      var sum_pop = pop_agesex.median().reduceRegion({
-        reducer: ee.Reducer.sum(),
-        geometry: ee.Geometry(geometry),
-        scale: 100, // Adjust scale to 100 to fit WorldPop resolution
-        maxPixels: 1e13,
-        bestEffort: true
-      });
-      print('Total population:',sum_pop);
-      
-      var pct_affected = ee.Number(sum_pop_affected.get('population'))
-                         .divide(ee.Number(sum_pop.get('population')))
-                         .multiply(10000).round() // Round to 2 decimal places
-                         .divide(100); // get %
-      print(pct_affected);
-    
-      
-      // Add/replace widget
-      rightPanel.widgets().set(2,ui.Label('Selected region: '+ selectedName));
-      rightPanel.widgets().set(3,ui.Label('Average DRI in ' + Yearslider.getValue() + ' is ' + round_driValue));
-      rightPanel.widgets().set(4,ui.Label(pct_affected.getInfo() + '% of the population in '+selectedName+ ' live on highly degraded land (DRI > 0.5)'));
-      rightPanel.widgets().set(5,chart1);
-      rightPanel.widgets().set(6,chart2);
-  });
-});
-```
-
-# References
+# IV. References
 
 USGS: Landsat Missions (n.d.). Landsat Modified Soil Adjusted Vegetation Index \| U.S. Geological Survey. \[online\] www.usgs.gov. Available at: https://www.usgs.gov/landsat-missions/landsat-modified-soil-adjusted-vegetation-index \[Accessed 21 Apr. 2024\].
 
@@ -480,5 +525,3 @@ Yang, Z., Gao, X., Lei, J., Meng, X. and Zhou, N. (2022). Analysis of spatiotemp
 Wen, Ye & Guo, Bing & Zang, Wenqian & Ge, Dazhuan & Luo, Wei & Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.
 
 Wu, Z., Lei, S., Bian, Z. *et al.* Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region. *Environ Earth Sci* 78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9
-
-Yang et al (2022

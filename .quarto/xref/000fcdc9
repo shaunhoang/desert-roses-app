@@ -1,5 +1,1 @@
-<<<<<<< Updated upstream
-{"headings":["project-summary","problem-statement","end-user","data-source","methodology","albedo","modified-soil-adjusted-vegetation-index","desertification-risk-index-dri","interface","the-application","how-it-works","calculating-desertification-risk-index-from-land-8-dataset","estimating-the-affected-population-using-the-worldpop-dataset","user-interface","references"],"entries":[]}
-=======
-{"headings":["project-summary","problem-statement","end-user","data-source","methodology","interface","the-application","how-it-works","calculating-desertification-risk-index-from-land-8-dataset","estimating-the-affected-population-using-the-worldpop-dataset","statistics-and-graphs-for-the-year-and-area-of-interest","references"],"entries":[]}
->>>>>>> Stashed changes
+{"headings":["i.-overview","problem-statement","end-user","data-source","methodology","interface","ii.-the-application","iii.-the-code-behind-the-scene","calculating-desertification-risk-index-2014-2023-from-land-8-dataset","estimating-the-affected-population-using-the-worldpop-dataset","statistics-and-graphs-for-the-year-and-area-of-interest","iv.-references"],"entries":[]}
