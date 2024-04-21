@@ -1,7 +1,3 @@
----
-numbering: false
----
-
 ![](images/clipboard-3098452386.png){fig-align="center"}
 
 # Monitoring desertification risk in Niger {.unnumbered}
