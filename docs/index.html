@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="MASH Potatoes, (UCL CASA), 2024">
+<meta name="dcterms.date" content="2025-10-04">
 
-<title>index</title>
+<title>🏜️Project Desert Rose🏜️</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,11 +60,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./images/circl-logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -98,30 +102,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-search-results"></div>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#monitoring-desertification-risk-in-niger" id="toc-monitoring-desertification-risk-in-niger" class="nav-link active" data-scroll-target="#monitoring-desertification-risk-in-niger">Monitoring desertification risk in Niger</a>
+  <ul class="collapse">
+  <li><a href="#i.-the-overview" id="toc-i.-the-overview" class="nav-link" data-scroll-target="#i.-the-overview">I. The Overview</a>
+  <ul class="collapse">
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
+  <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">Data Source</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
+  </ul></li>
+  <li><a href="#ii.-the-application" id="toc-ii.-the-application" class="nav-link" data-scroll-target="#ii.-the-application">II. The Application</a></li>
+  <li><a href="#iii.-the-codes" id="toc-iii.-the-codes" class="nav-link" data-scroll-target="#iii.-the-codes">III. The codes</a>
+  <ul class="collapse">
+  <li><a href="#calculating-desertification-risk-index-2014-2023-from-landsat-8-dataset" id="toc-calculating-desertification-risk-index-2014-2023-from-landsat-8-dataset" class="nav-link" data-scroll-target="#calculating-desertification-risk-index-2014-2023-from-landsat-8-dataset">Calculating Desertification Risk Index 2014-2023 from Landsat-8 dataset</a></li>
+  <li><a href="#estimating-the-affected-population-using-the-worldpop-dataset" id="toc-estimating-the-affected-population-using-the-worldpop-dataset" class="nav-link" data-scroll-target="#estimating-the-affected-population-using-the-worldpop-dataset">Estimating the affected population using the WorldPop dataset</a></li>
+  <li><a href="#statistics-and-graphs-for-the-year-and-area-of-interest" id="toc-statistics-and-graphs-for-the-year-and-area-of-interest" class="nav-link" data-scroll-target="#statistics-and-graphs-for-the-year-and-area-of-interest">Statistics and graphs for the Year and Area of interest</a></li>
+  </ul></li>
+  <li><a href="#iv.-references" id="toc-iv.-references" class="nav-link" data-scroll-target="#iv.-references">IV. References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🏜️Project Desert Rose🏜️</h1>
+</div>
 
 
-<p><em><strong>🏜️Project Desert Rose🏜️<br>
-</strong>Project team: MASH potatoes (UCL CASA), 2024</em></p>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>MASH Potatoes, (UCL CASA), 2024 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 4, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-3098452386.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<section id="monitoring-desertification-risk-in-niger" class="level1 page-columns page-full">
-<h1>Monitoring desertification risk in Niger</h1>
+<section id="monitoring-desertification-risk-in-niger" class="level1 unnumbered page-columns page-full">
+<h1 class="unnumbered">Monitoring desertification risk in Niger</h1>
 <section id="i.-the-overview" class="level2">
 <h2 class="anchored" data-anchor-id="i.-the-overview">I. The Overview</h2>
 <section id="problem-statement" class="level3">

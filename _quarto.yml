@@ -1,10 +1,10 @@
 project:
-  type: website
+  type: book
   output-dir: docs
 
 book:
-  title: "Project Desert Rose: Monitoring desertification risk areas in Niger"
-  author: "MASH Potatoes"
+  title: "🏜️Project Desert Rose🏜️"
+  author: "MASH Potatoes, (UCL CASA), 2024"
   date: "22/04/2024"
   chapters:
     - index.qmd
@@ -20,3 +20,6 @@ format:
     code-overflow: wrap
     highlight-style: monokai.theme
     linkcolor: "#34a832"
+    css: styles.css
+    navbar: false
+    sidebar: false

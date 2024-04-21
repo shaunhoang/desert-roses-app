@@ -1,9 +1,10 @@
-***🏜️Project Desert Rose🏜️ \
-**Project team: MASH potatoes (UCL CASA), 2024*
+---
+numbering: false
+---
 
 ![](images/clipboard-3098452386.png){fig-align="center"}
 
-# Monitoring desertification risk in Niger
+# Monitoring desertification risk in Niger {.unnumbered}
 
 ## I. The Overview
 
