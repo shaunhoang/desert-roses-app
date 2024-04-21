@@ -151,11 +151,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
-<p>According to Wu et al.&nbsp;(2019), the Desertification Risk Index (DRI) can be calculated using Landsat 8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated.</p>
+<p>According to Wu et al.&nbsp;(2019), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. Furthermore, Yang et al (2022) identify that the combined albedo-MSAVI formula is most optimal for identifying desertification in the Sahel region.</p>
+<section id="albedo" class="level4">
+<h4 class="anchored" data-anchor-id="albedo">Albedo</h4>
+<p>Albedo is a measure of the reflectivity of the Earth’s surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps in understanding the Earth’s energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). The formula for albedo, particularly using Landsat data (as the calculation can vary based on sensor and land type), involves a weighted combination of spectral bands B2 (Blue), B4 (Red), B5 (NIR), B6 (SWIR1), B7 (SWIR2); these represent different portions of the electromagnetic spectrum (Wu et al., 2019):</p>
 <p><span class="math display">\[ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 \]</span></p>
+<p>High albedo values correlate with highly reflective surfaces (such as flat desert or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).</p>
+<p><u>Higher albedo</u>, in this context, indicates <u>higher levels of desertification</u>.</p>
+</section>
+<section id="modified-soil-adjusted-vegetation-index" class="level4">
+<h4 class="anchored" data-anchor-id="modified-soil-adjusted-vegetation-index">Modified Soil Adjusted Vegetation Index</h4>
+<p>The MSAVI is designed to minimise the impact of soil brightness when vegetation is sparse, providing a more accurate vegetation signal. This index is particularly useful in semi-arid regions, such as Niger, where exposed soil can significantly affect the standard vegetation indices like NDVI. It ranges from -1 (non-vegetated areas or sparse vegetation) to 1 (higher levels of vegetation and vegetation health). The formula for MSAVI is:</p>
 <p><span class="math display">\[ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 \]</span></p>
-<p>The Desertification Risk Index (DRI) is then defined as:</p>
+<p>This index uses a quadratic function to reduce the influence of soil background by adjusting the red (B3) and near-infrared (B4) band values. The incorporation of an “inductive L function” in this formula helps to maximise the reduction of soil effects, enhancing the robustness of vegetation monitoring (USGS: Landsat Missions, n.d.; Wu et al., 2019).</p>
+<p>We then adapt this by adding 1 to the value and dividing by 2 – this shifts values to the 0 to 2 range and then standardises to them to the 0 to 1 range (same as albedo).</p>
+<p><u>Higher MSAVI</u>, in this context, indicates <u>lower levels of desertification</u>.</p>
+</section>
+<section id="desertification-risk-index-dri" class="level4">
+<h4 class="anchored" data-anchor-id="desertification-risk-index-dri">Desertification Risk Index (DRI)</h4>
+<p>The DRI integrates the albedo and MSAVI to assess areas at risk of desertification (adapted from Wu et al., 2019; and Yang et al., 2022). Its composite score effectively synthesises information on both vegetation health and surface reflectivity into a single metric. Due to the opposite direction of each indicator correlating with higher levels of desertification, they need to be transformed so that they are in the same direction, before being weighed and aggregated. As such the formula for DRI is:</p>
 <p><span class="math display">\[ DRI = L_1 = \sqrt{(MSAVI-1)^2 + Albedo^2} \]</span></p>
+<p>This formula produces values where a higher DRI indicates greater risk of desertification. The use of Euclidean distance in this formula combines the deviations of MSAVI and albedo from their norms, providing a measure that is sensitive to changes in both vegetation cover and surface reflectivity.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-449413320.png" class="img-fluid figure-img"></p>
@@ -163,6 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>It is worth noting that this methodology has shown relatively high accuracy in detecting and classifying desertification in the Naiman Banner in Inner Mongolia (China) but not specifically in the Southern Sahel where Niger is located. However, thanks to the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate for the Southern Sahel region.</p>
+</section>
 </section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
@@ -210,6 +227,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
+<p>USGS: Landsat Missions (n.d.). Landsat Modified Soil Adjusted Vegetation Index | U.S. Geological Survey. [online] www.usgs.gov. Available at: https://www.usgs.gov/landsat-missions/landsat-modified-soil-adjusted-vegetation-index [Accessed 21 Apr.&nbsp;2024].</p>
+<p>Yale (n.d.). How to convert Landsat DNs to albedo | Center for Earth Observation. [online] Center for Earth Observation. Available at: https://yceo.yale.edu/how-convert-landsat-dns-albedo [Accessed 21 Apr.&nbsp;2024].</p>
+<p>Yang, Z., Gao, X., Lei, J., Meng, X. and Zhou, N. (2022). Analysis of spatiotemporal changes and driving factors of desertification in the Africa Sahel. CATENA, 213, p.106213. doi:https://doi.org/10.1016/j.catena.2022.106213.</p>
 <p>Wen, Ye &amp; Guo, Bing &amp; Zang, Wenqian &amp; Ge, Dazhuan &amp; Luo, Wei &amp; Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.</p>
 <p>Wu, Z., Lei, S., Bian, Z.&nbsp;<em>et al.</em>&nbsp;Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region.&nbsp;<em>Environ Earth Sci</em>&nbsp;78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9</p>
 
