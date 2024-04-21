@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "🏜️Project Desert Rose🏜️"
+  title: "️Project Desert Rose🏜️"
   author: "MASH Potatoes, (UCL CASA), 2024"
   chapters:
     - index.qmd
