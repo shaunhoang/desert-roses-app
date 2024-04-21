@@ -34,7 +34,7 @@ This formula produces values where a higher DRI indicates greater risk of desert
 
 ![A larger DRI means more degraded soil and higher desertification risk.](images/clipboard-449413320.png){fig-align="center"}
 
-It is worth noting that this methodology has shown relatively high accuracy in detecting and classifying desertification in the Naiman Banner in Inner Mongolia (China) but not specifically in the Southern Sahel where Niger is located. However, thanks to the fact that the two areas share similar characteristics in terms of wetness and vegetation, we see the application of this methodology as appropriate for the Southern Sahel region.
+This methodology has shown relatively high accuracy in detecting and classifying desertification in the Naiman Banner in Inner Mongolia (China) and can be applied to the Sahel, since the two areas share similar characteristics in terms of wetness and lack of vegetation.
 
 ### Interface
 
@@ -86,11 +86,11 @@ $$ DRI = \sqrt{(MSAVI-1)^2 + Albedo^2} $$
 
 where:
 
--   **Albedo** is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps understand the Earth's energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). High albedo values correlate with highly reflective surfaces (such as flat deserts or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).
+-   **Albedo** is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). High albedo values correlate with highly reflective surfaces (such as flat deserts or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).
 
 $$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$
 
--   **Modified Soil Adjusted Vegetation Index (MSAVI)** is designed to minimise the impact of soil brightness when vegetation is sparse, providing a more accurate vegetation signal. This index is particularly useful in semi-arid regions, such as Niger, where exposed soil can significantly affect the standard vegetation indices like NDVI. Since, it ranges from -1 (non-vegetated areas or sparse vegetation) to 1 (higher levels of vegetation and vegetation health), we adapt this by adding 1 to the value and dividing by 2 to normalise to the 0 to 1 range (same as albedo).
+-   **Modified Soil Adjusted Vegetation Index (MSAVI)** is designed to minimise the impact of soil brightness when vegetation is sparse, providing a more accurate vegetation signal, and useful in semi-arid regions, such as Niger, where exposed soil can significantly affect the standard vegetation indices like NDVI. Since, it ranges from -1 (non-vegetated areas or sparse vegetation) to 1 (higher levels of vegetation and vegetation health), we normalise this to 0-1 by adding 1 and dividing by 2.
 
 $$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$
 
@@ -232,7 +232,7 @@ Map.add(legendPanel)
 
 ![High DRI areas with values below 0.25 masked out](images/clipboard-516908086.png){width="1000"}
 
-Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer, it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.
+Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer, it is clear to see rapid desertification around the population centres such as Niamey in the southern region.
 
 ``` javascript
 // Difference in DRI between 2023 and 2014
@@ -248,7 +248,7 @@ var diff_img = differenceImage.updateMask(differenceImage.gt(0.01).or(difference
 
 ### Estimating the affected population using the WorldPop dataset
 
-Showing the desertification level layer alone is not insightful for the user as most of the country's land cover is dominated by the existing Sahara desert that is uninhabited. Therefore, we want to visualise desertification risk only in areas with population by intersecting the newly created DRI later with the population density layer (WorldPop Population estimates of 2020 used as this was the most recent)
+Showing the desertification level layer alone is not insightful for the user as most of the country's land cover is dominated by the uninhabited Sahara desert Therefore, we wanted to visualise desertification risk only in areas with population by intersecting the newly created DRI layer with the population layer.
 
 ``` javascript
 // Population Raster from WorldPop
@@ -282,7 +282,7 @@ This code results in the creation of 2 layers that highlight the extent of deser
 
 ### Statistics and graphs for the Year and Area of interest
 
-Besides producing the layers, the app affords users with key interaction components such as zooming into the year and area of interest, from which relevant stats and graphs are produced. Note that the code examples below are not comprehensive and serve only to highlight key components of the UI.
+Besides producing the layers, the app provides users with key interaction components such as selecting the year and area of interest to see relevant stats and figures. Note that the code examples below are not comprehensive and only highlight select UI components.
 
 For the interface we used a split-panel approach. The *left-hand panel* allows the user to pick the **year of interest** via a slider
 
@@ -375,7 +375,7 @@ function drawPolygon() {
 }
 ```
 
-Once an **area of interest** has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), mean DRI value, change of DRI 2014-2023, population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
+Once an **area of interest** has been identified, the *right-hand panel* will generate the relevant stats: mean DRI value, change of DRI 2014-2023, population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu.
 
 ``` js
 // Set a callback function for when the user selects a boundary
