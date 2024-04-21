@@ -10,7 +10,6 @@ title: Project Desert Rose - Identifying desertification risk areas in Niger
 
 Niger, a landlocked country in Africa's Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.
 
-However, as each task force operates independently, the nation lacks centralised visibility on desertification risks to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.
 However, as each task force operates independently, the nation lacks centralised visibility on nationwide desertification risks, making it difficult to mobilise the action plan with urgency and prioritise resources across diverse actors to the communities most in need.
 
 ### End User
