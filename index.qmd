@@ -14,14 +14,10 @@ However, as each task force operates independently, the nation lacks centralised
 
 ### End User
 
-This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.
-
-Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.
 This application is meant for the local government, NGOs and different organisations so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution and which areas are seeing desertification worsen over the past decade.
 
 ### Data Source
 
-To derive the *Desertification Index (*detailed methodology below), we used *Landsat 8 OLI data (2013-present)* for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the *WorldPop global population raster data at 100m resolution (2000-2020*). Finally, to delineate the boundaries of interest, we will use *Niger Administrative Boundaries, Level 0 through 2.*
 Three remote sensing Google Earth Engine data sets are used:
 
 -   To derive the *Desertification Risk Index (*detailed methodology below), we used *Landsat 8 OLI* hyperspectral remote sensing data (*2014-2023)* containing all the necessary spectral bands for index calculation.
@@ -32,14 +28,13 @@ Three remote sensing Google Earth Engine data sets are used:
 
 ### Methodology
 
-According to Wu et al. (2019), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. Furthermore, Yang et al (2022) identify that the combined albedo-MSAVI formula is most optimal for identifying desertification in the Sahel region.
+According to Wu et al. (2019) and Wen et al. (2020), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. Furthermore, Yang et al (2022) identify that the combined albedo-MSAVI formula is optimal for identifying desertification in the Sahel region.
 
 #### Albedo
 
-Albedo is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps in understanding the Earth's energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). The formula for albedo, particularly using Landsat data (as the calculation can vary based on sensor and land type), involves a weighted combination of spectral bands B2 (Blue), B4 (Red), B5 (NIR), B6 (SWIR1), B7 (SWIR2); these represent different portions of the electromagnetic spectrum (Wu et al., 2019):
-=======
+Albedo is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps understand the Earth's energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). The formula for albedo, particularly using Landsat data (as the calculation can vary based on sensor and land type), involves a weighted combination of spectral bands B2 (Blue), B4 (Red), B5 (NIR), B6 (SWIR1), B7 (SWIR2); these represent different portions of the electromagnetic spectrum (Wu et al., 2019):
+
 According to Wu et al. (2019) and Wen et al. (2020), the Desertification Risk Index (DRI) can be calculated using Landsat 8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were derived.
->>>>>>> Stashed changes
 
 $$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$
 
@@ -73,7 +68,6 @@ It is worth noting that this methodology has shown relatively high accuracy in d
 
 ### Interface
 
-First, the user picks the *year of interest* using a slider. This will produce populated areas with high desertification risks. To acquire statistics on the extent of human impact, the user can choose a *region of interest* from the drop-down menu or draw the area of interest using the tool provided, to know the population share that lives on degraded land.
 The user can select the *year of interest* and then the *area of interest* to produce various map layers and statistics:
 
 -   By default, the map of high-risk areas will be shown, indicating the desertification level only in populated areas, excluding uninhabited lands such as the inner section of the Sahara Desert to the north.
@@ -85,7 +79,6 @@ Finally, other layers of interest are (1) Population density in high-risk areas,
 # The Application
 
 ::: column-page
-<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
 <iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="125%" height="500px">
 
 </iframe>
@@ -95,7 +88,6 @@ Finally, other layers of interest are (1) Population density in high-risk areas,
 
 ### Calculating Desertification Risk Index from Land-8 dataset
 
-Explain the DRI calculation + the transformation we made to normalise the indices...
 (Aaron)
 
 First,
@@ -117,7 +109,6 @@ var composite = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
 ```
 
 ``` js
-Map.setCenter(35.51898, 33.90153, 15);
 // Function to calculate DRI
 var calculateIndices = function(image){
   // Calculate MSAVI
@@ -155,10 +146,8 @@ var calculateIndices = function(image){
 
 Load data
 
-Map.setOptions("satellite");
 ``` js
 
-var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
               
 // Simplify collection to years (median) and calculate indices 
 var distinctYears = ee.List.sequence(2014, 2023);
@@ -186,12 +175,10 @@ var composite_annual_masked = composite_annual.map(maskByDRI);
 
 Explain the code to mask DRI layer + Population to identify high-risk populated areas to produce stats
 
-### User Interface
 ### Statistics and graphs for the year and area of interest
 
 The left-hand panel allows the user to pick the year of interest via a slider
 
-Use this section to explain interactive components:
 ``` js
 // Create the Year Slider
 var YearLabel = ui.Label('Year');
@@ -219,10 +206,8 @@ function updateLayer() {
 }
 ```
 
--   Split panels
 The left-hand panel also enables the user to select an area of interest in one of two ways:
 
--   Dropdown menu
 1.  the dropdown menu allows you to click on one of the 8 administrative regions within the country
 
 ``` js
@@ -255,11 +240,9 @@ var dropdown_menu = ui.Select({
 });
 ```
 
--   Draw polygons
 2.  the user can choose to draw a point-based polygon directly onto the map. Enabling this option allows users to zoom into particular areas that are otherwise not distinguishable by region. This is complete with a Clear button to remove the drawn polygon, and a Reset button to reset everything to the initial state.
 
 ``` js
-Map.setCenter(35.51898, 33.90153, 15);  Map.setOptions("satellite");  var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
 // Add in draw polygon feature
 var drawingTools = Map.drawingTools();
 drawingTools.setShown(false);
@@ -304,7 +287,6 @@ function reset() {
 }
 ```
 
-You can include images:
 Once an area of interest has been identified, the right-hand panel will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The example below is the callback function for the dropdown menu, sharing similar callbacks as the drawing tool.
 
 ``` js
@@ -451,8 +433,6 @@ var legendPanel = ui.Panel({
 
 Map.add(legendPanel)
 ```
-
-![](images/Screenshot%202024-04-19%20205034.png){fig-align="center"}
 
 # References
 
