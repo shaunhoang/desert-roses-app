@@ -58,9 +58,11 @@ Finally, other layers of interest are (1) Population density in high-risk areas,
 </iframe>
 :::
 
+Access the GEE application in full [here](https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose)
+
 ## III. The codes
 
-Here are some highlights of what goes on behind the scene of the web app.fontS
+Here are some highlights of what goes on behind the scene of the web app
 
 ### Calculating Desertification Risk Index 2014-2023 from Landsat-8 dataset
 
