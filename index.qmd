@@ -375,7 +375,7 @@ function drawPolygon() {
 }
 ```
 
-Once an area of interest has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
+Once an **area of interest** has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
 
 ``` js
 // Set a callback function for when the user selects a boundary
