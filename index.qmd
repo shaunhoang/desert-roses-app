@@ -1,14 +1,15 @@
----
-title: Project Desert Rose - Identifying desertification risk areas in Niger
----
+***🏜️Project Desert Rose🏜️ \
+**Project team: MASH potatoes (UCL CASA), 2024*
 
 ![](images/clipboard-3098452386.png){fig-align="center"}
 
-# I. Overview
+# Monitoring desertification risk in Niger
+
+## I. The Overview
 
 ### Problem Statement
 
-Niger, a landlocked country in Africa's Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) aim to restore degraded land and push back the desert.
+Niger, a landlocked country in Africa's Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) with its flaghsip project the **Great Green Wall** aim to restore degraded land and push back the desert.
 
 However, as each task force operates independently, the nation lacks centralised visibility on nationwide desertification risks, making it difficult to mobilise the action plan with urgency and prioritise resources across diverse actors to the communities most in need.
 
@@ -48,19 +49,19 @@ The user can select the *year of interest* and then the *area of interest* to pr
 
 Finally, other layers of interest are (1) Population density in high-risk areas, (2) DRI nationwide in the year of choice, and (3) Change in DRI nationwide 2014-2023.
 
-# II. The Application
+## II. The Application
 
 ::: column-page
-<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="125%" height="600px">
 
 </iframe>
 :::
 
-# III. The code behind the scene
+## III. The codes
 
-Here are some highlights of what goes on behind the scene of the web app.
+Here are some highlights of what goes on behind the scene of the web app.fontS
 
-### Calculating Desertification Risk Index 2014-2023 from Land-8 dataset
+### Calculating Desertification Risk Index 2014-2023 from Landsat-8 dataset
 
 First, we load the necessary Landsat 8 collection and the boundaries of Niger (level 1 and 0)
 
@@ -121,11 +122,11 @@ var calculateIndices = function(image) {
 
     // Calculate DRI
     var dri = image.expression(
-        'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )', {
+        'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )/sqrt(2)', {
             'MSAVI': msavi, // Use the MSAVI band calculated previously
             'Albedo': albedo // Use the Albedo band calculated previously
         }).rename('DRI');
-    // DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula
+    // DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula. Divide by sqrt(2) to normalise it to 0-1.
 
     // Return the image with added DRI band
     return image.addBands([dri, msavi, albedo]).clip(nigerGeometry);
@@ -153,18 +154,18 @@ var composite_annual = ee.ImageCollection.fromImages(
 ).map(calculateIndices);
 ```
 
-After we applied the index calculation, we masked out DRI values less than 0.5 to highlight areas with high risk of desertification.
+After we applied the index calculation, we masked out DRI values less than 0.25 to highlight areas with high risk of desertification.
 
 ``` js
-// Mask images based on DRI values, highlighted high DRI areas only
+// Mask images based on DRI values, highlighted high DRI areas only, excluding first quartile
 function maskByDRI(image) {
-    var driMask = image.select('DRI').gte(0.5);
+    var driMask = image.select('DRI').gte(0.25);
     return image.updateMask(driMask);
 }
 var composite_annual_masked = composite_annual.map(maskByDRI);
 ```
 
-We also added a legend for the DRI value with a colour scale.
+We also added a legend for the DRI value with the corresponding colour scale.
 
 ``` javascript
 // Color palette to viz params function
@@ -230,7 +231,7 @@ var legendPanel = ui.Panel({
 Map.add(legendPanel)
 ```
 
-![High DRI areas nationwide with values below 0.5 masked out](images/clipboard-503500441.png){fig-align="center" width="1000"}
+![High DRI areas with values below 0.25 masked out](images/clipboard-516908086.png){width="1000"}
 
 Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer, it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.
 
@@ -239,12 +240,12 @@ Finally, to show the change in DRI in the past decade, we also produced a layer 
 var image2014 = composite_annual.select('DRI').filterDate('2014-01-01', '2014-12-31').median();
 var image2023 = composite_annual.select('DRI').filterDate('2023-01-01', '2023-12-31').median();
 
-// Calculate the difference image
+// Calculate the difference image, mask out small change (within 0.01)
 var differenceImage = image2023.subtract(image2014);
 var diff_img = differenceImage.updateMask(differenceImage.gt(0.01).or(differenceImage.lt(-0.01)));
 ```
 
-![Change in DRI 2014-2023. Lighter pixels see a higher increase in DRI, while darker ones see a decrease in DRI.](images/clipboard-2172427467.png){fig-align="center" width="1000"}
+![Change in DRI 2014-2023, with small changes within 0.01 unit filtered out. Darker pixels see an increase, while lighter ones see a decrease in DRI.](images/clipboard-3420583493.png)
 
 ### Estimating the affected population using the WorldPop dataset
 
@@ -278,7 +279,7 @@ var intersectionImage_DRI = dri_masked.updateMask(intersectionMask_DRI);
 
 This code results in the creation of 2 layers that highlight the extent of desertification specifically in populated areas, one shows the DRI values and the other shows the population density.
 
-![Desertification in populated areas (i.e. High-risk areas). Left: By DRI values . Right: By Population Density.](images/clipboard-3677790972.png){width="1000"}
+![Desertification in populated areas only (i.e. High-risk areas). Left: visualised by DRI values. Right: Visualised by Population Density.](images/clipboard-3677790972.png){width="1000"}
 
 ### Statistics and graphs for the Year and Area of interest
 
@@ -375,7 +376,7 @@ function drawPolygon() {
 }
 ```
 
-Once an **area of interest** has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
+Once an **area of interest** has been identified, the *right-hand panel* will generate the relevant stats and graphs related to the desertification index (as shown on the map), mean DRI value, change of DRI 2014-2023, population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.
 
 ``` js
 // Set a callback function for when the user selects a boundary
@@ -470,10 +471,31 @@ dropdown.widgets().get(1).onChange(function(selectedName) {
         print(pct_affected);
 
 
+        // Change DRI value
+        var diff_stat = differenceImage.reduceRegion({
+            reducer: ee.Reducer.mean(),
+            geometry: ee.Geometry(geometry),
+            scale: 1000, //
+            maxPixels: 1e13,
+            bestEffort: true
+        })
+        
+        diff_stat = ee.Number(diff_stat.get('DRI'))
+                      .multiply(100000).round().divide(100000).getInfo() // Round to 5 decimal places
+        // ;
+        print('DRI change 2014-2023: ', diff_stat);
+
+
         // Add/replace widget
-        rightPanel.widgets().set(2, ui.Label('Selected region: ' + selectedName));
-        rightPanel.widgets().set(3, ui.Label('Average DRI in ' + Yearslider.getValue() + ' is ' + round_driValue));
-        rightPanel.widgets().set(4, ui.Label(pct_affected.getInfo() + '% of the population in ' + selectedName + ' live on highly degraded land (DRI > 0.5)'));
+        rightPanel.widgets().set(2, ui.Label('Selected region: ' + selectedName, {
+            fontSize: '12px'
+        }));
+        rightPanel.widgets().set(3, ui.Label('Average DRI in ' + Yearslider.getValue() + ' is ' + round_driValue + ', and the average change in DRI 2014-2023 is ' + diff_stat, {
+            fontSize: '12px'
+        }));
+        rightPanel.widgets().set(4, ui.Label(pct_affected.getInfo() + '% of the population in ' + selectedName + ' live on highly degraded land', {
+            fontSize: '12px'
+        }));
         rightPanel.widgets().set(5, chart1);
         rightPanel.widgets().set(6, chart2);
     });
@@ -512,9 +534,9 @@ function reset() {
 }
 ```
 
-![The app's UI after the year and area of interest have been indicated](images/clipboard-3754887948.png){fig-align="center" width="2504"}
+![The app's UI after the year and area of interest have been indicated](images/clipboard-1143629683.png){width="1000"}
 
-# IV. References
+## IV. References
 
 USGS: Landsat Missions (n.d.). Landsat Modified Soil Adjusted Vegetation Index \| U.S. Geological Survey. \[online\] www.usgs.gov. Available at: https://www.usgs.gov/landsat-missions/landsat-modified-soil-adjusted-vegetation-index \[Accessed 21 Apr. 2024\].
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project Desert Rose - Identifying desertification risk areas in Niger</title>
+<title>index</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,33 +111,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Project Desert Rose - Identifying desertification risk areas in Niger</h1>
-</div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
+<p><em><strong>🏜️Project Desert Rose🏜️<br>
+</strong>Project team: MASH potatoes (UCL CASA), 2024</em></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-3098452386.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<section id="i.-overview" class="level1">
-<h1>I. Overview</h1>
+<section id="monitoring-desertification-risk-in-niger" class="level1 page-columns page-full">
+<h1>Monitoring desertification risk in Niger</h1>
+<section id="i.-the-overview" class="level2">
+<h2 class="anchored" data-anchor-id="i.-the-overview">I. The Overview</h2>
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
-<p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) aim to restore degraded land and push back the desert.</p>
+<p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) with its flaghsip project the <strong>Great Green Wall</strong> aim to restore degraded land and push back the desert.</p>
 <p>However, as each task force operates independently, the nation lacks centralised visibility on nationwide desertification risks, making it difficult to mobilise the action plan with urgency and prioritise resources across diverse actors to the communities most in need.</p>
 </section>
 <section id="end-user" class="level3">
@@ -176,18 +165,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Finally, other layers of interest are (1) Population density in high-risk areas, (2) DRI nationwide in the year of choice, and (3) Change in DRI nationwide 2014-2023.</p>
 </section>
 </section>
-<section id="ii.-the-application" class="level1 page-columns page-full">
-<h1>II. The Application</h1>
+<section id="ii.-the-application" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ii.-the-application">II. The Application</h2>
 <div class="column-page">
-<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="125%" height="600px">
 </iframe>
 </div>
 </section>
-<section id="iii.-the-code-behind-the-scene" class="level1">
-<h1>III. The code behind the scene</h1>
-<p>Here are some highlights of what goes on behind the scene of the web app.</p>
-<section id="calculating-desertification-risk-index-2014-2023-from-land-8-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-desertification-risk-index-2014-2023-from-land-8-dataset">Calculating Desertification Risk Index 2014-2023 from Land-8 dataset</h3>
+<section id="iii.-the-codes" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-the-codes">III. The codes</h2>
+<p>Here are some highlights of what goes on behind the scene of the web app.fontS</p>
+<section id="calculating-desertification-risk-index-2014-2023-from-landsat-8-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-desertification-risk-index-2014-2023-from-landsat-8-dataset">Calculating Desertification Risk Index 2014-2023 from Landsat-8 dataset</h3>
 <p>First, we load the necessary Landsat 8 collection and the boundaries of Niger (level 1 and 0)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Load country boundaries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> niger <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(<span class="st">"FAO/GAUL/2015/level0"</span>)<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'ADM0_CODE'</span><span class="op">,</span> <span class="dv">181</span>))<span class="op">;</span></span>
@@ -238,11 +227,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate DRI</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> dri <span class="op">=</span> image<span class="op">.</span><span class="fu">expression</span>(</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )'</span><span class="op">,</span> {</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )/sqrt(2)'</span><span class="op">,</span> {</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'MSAVI'</span><span class="op">:</span> msavi<span class="op">,</span> <span class="co">// Use the MSAVI band calculated previously</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Albedo'</span><span class="op">:</span> albedo <span class="co">// Use the Albedo band calculated previously</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        })<span class="op">.</span><span class="fu">rename</span>(<span class="st">'DRI'</span>)<span class="op">;</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula. Divide by sqrt(2) to normalise it to 0-1.</span></span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Return the image with added DRI band</span></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image<span class="op">.</span><span class="fu">addBands</span>([dri<span class="op">,</span> msavi<span class="op">,</span> albedo])<span class="op">.</span><span class="fu">clip</span>(nigerGeometry)<span class="op">;</span></span>
@@ -264,14 +253,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fu">annualComposite</span>(year)<span class="op">;</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">flatten</span>()</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>)<span class="op">.</span><span class="fu">map</span>(calculateIndices)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After we applied the index calculation, we masked out DRI values less than 0.5 to highlight areas with high risk of desertification.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Mask images based on DRI values, highlighted high DRI areas only</span></span>
+<p>After we applied the index calculation, we masked out DRI values less than 0.25 to highlight areas with high risk of desertification.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Mask images based on DRI values, highlighted high DRI areas only, excluding first quartile</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">maskByDRI</span>(image) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> driMask <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">.</span><span class="fu">gte</span>(<span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> driMask <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">.</span><span class="fu">gte</span>(<span class="fl">0.25</span>)<span class="op">;</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image<span class="op">.</span><span class="fu">updateMask</span>(driMask)<span class="op">;</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> composite_annual_masked <span class="op">=</span> composite_annual<span class="op">.</span><span class="fu">map</span>(maskByDRI)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We also added a legend for the DRI value with a colour scale.</p>
+<p>We also added a legend for the DRI value with the corresponding colour scale.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Color palette to viz params function</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">makeColorBarParams</span>(palette) {</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
@@ -335,8 +324,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">add</span>(legendPanel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/clipboard-503500441.png" class="img-fluid figure-img" width="1000"></p>
-<figcaption class="figure-caption">High DRI areas nationwide with values below 0.5 masked out</figcaption>
+<p><img src="images/clipboard-516908086.png" class="img-fluid figure-img" width="1000"></p>
+<figcaption class="figure-caption">High DRI areas with values below 0.25 masked out</figcaption>
 </figure>
 </div>
 <p>Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer, it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.</p>
@@ -344,13 +333,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> image2014 <span class="op">=</span> composite_annual<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">.</span><span class="fu">filterDate</span>(<span class="st">'2014-01-01'</span><span class="op">,</span> <span class="st">'2014-12-31'</span>)<span class="op">.</span><span class="fu">median</span>()<span class="op">;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> image2023 <span class="op">=</span> composite_annual<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">.</span><span class="fu">filterDate</span>(<span class="st">'2023-01-01'</span><span class="op">,</span> <span class="st">'2023-12-31'</span>)<span class="op">.</span><span class="fu">median</span>()<span class="op">;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate the difference image</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Calculate the difference image, mask out small change (within 0.01)</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> differenceImage <span class="op">=</span> image2023<span class="op">.</span><span class="fu">subtract</span>(image2014)<span class="op">;</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> diff_img <span class="op">=</span> differenceImage<span class="op">.</span><span class="fu">updateMask</span>(differenceImage<span class="op">.</span><span class="fu">gt</span>(<span class="fl">0.01</span>)<span class="op">.</span><span class="fu">or</span>(differenceImage<span class="op">.</span><span class="fu">lt</span>(<span class="op">-</span><span class="fl">0.01</span>)))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/clipboard-2172427467.png" class="img-fluid figure-img" width="1000"></p>
-<figcaption class="figure-caption">Change in DRI 2014-2023. Lighter pixels see a higher increase in DRI, while darker ones see a decrease in DRI.</figcaption>
+<p><img src="images/clipboard-3420583493.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Change in DRI 2014-2023, with small changes within 0.01 unit filtered out. Darker pixels see an increase, while lighter ones see a decrease in DRI.</figcaption>
 </figure>
 </div>
 </section>
@@ -384,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-3677790972.png" class="img-fluid figure-img" width="1000"></p>
-<figcaption class="figure-caption">Desertification in populated areas (i.e.&nbsp;High-risk areas). Left: By DRI values . Right: By Population Density.</figcaption>
+<figcaption class="figure-caption">Desertification in populated areas only (i.e.&nbsp;High-risk areas). Left: visualised by DRI values. Right: Visualised by Population Density.</figcaption>
 </figure>
 </div>
 </section>
@@ -473,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    drawingTools<span class="op">.</span><span class="fu">setShape</span>(<span class="st">"polygon"</span>)<span class="op">;</span></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    drawingTools<span class="op">.</span><span class="fu">draw</span>()<span class="op">;</span></span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Once an <strong>area of interest</strong> has been identified, the <em>right-hand panel</em> will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.</p>
+<p>Once an <strong>area of interest</strong> has been identified, the <em>right-hand panel</em> will generate the relevant stats and graphs related to the desertification index (as shown on the map), mean DRI value, change of DRI 2014-2023, population growth, and the percentage of the population that live in desertified land. The code chunk below is an example from the callback function for the dropdown menu, with the polygon drawing tool sharing similar callbacks.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Set a callback function for when the user selects a boundary</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dropdown<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">get</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">onChange</span>(<span class="kw">function</span>(selectedName) {</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>selectedName) {</span>
@@ -566,14 +555,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(pct_affected)<span class="op">;</span></span>
 <span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Add/replace widget</span></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">2</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Selected region: '</span> <span class="op">+</span> selectedName))<span class="op">;</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">3</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Average DRI in '</span> <span class="op">+</span> Yearslider<span class="op">.</span><span class="fu">getValue</span>() <span class="op">+</span> <span class="st">' is '</span> <span class="op">+</span> round_driValue))<span class="op">;</span></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">4</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(pct_affected<span class="op">.</span><span class="fu">getInfo</span>() <span class="op">+</span> <span class="st">'% of the population in '</span> <span class="op">+</span> selectedName <span class="op">+</span> <span class="st">' live on highly degraded land (DRI &gt; 0.5)'</span>))<span class="op">;</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">5</span><span class="op">,</span> chart1)<span class="op">;</span></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">6</span><span class="op">,</span> chart2)<span class="op">;</span></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Change DRI value</span></span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> diff_stat <span class="op">=</span> differenceImage<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>            <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>            <span class="dt">geometry</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span></span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>            <span class="dt">scale</span><span class="op">:</span> <span class="dv">1000</span><span class="op">,</span> <span class="co">//</span></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>            <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span><span class="op">,</span></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>            <span class="dt">bestEffort</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>        diff_stat <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(diff_stat<span class="op">.</span><span class="fu">get</span>(<span class="st">'DRI'</span>))</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                      <span class="op">.</span><span class="fu">multiply</span>(<span class="dv">100000</span>)<span class="op">.</span><span class="fu">round</span>()<span class="op">.</span><span class="fu">divide</span>(<span class="dv">100000</span>)<span class="op">.</span><span class="fu">getInfo</span>() <span class="co">// Round to 5 decimal places</span></span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ;</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="st">'DRI change 2014-2023: '</span><span class="op">,</span> diff_stat)<span class="op">;</span></span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Add/replace widget</span></span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">2</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Selected region: '</span> <span class="op">+</span> selectedName<span class="op">,</span> {</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>            <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'12px'</span></span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>        }))<span class="op">;</span></span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">3</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Average DRI in '</span> <span class="op">+</span> Yearslider<span class="op">.</span><span class="fu">getValue</span>() <span class="op">+</span> <span class="st">' is '</span> <span class="op">+</span> round_driValue <span class="op">+</span> <span class="st">', and the average change in DRI 2014-2023 is '</span> <span class="op">+</span> diff_stat<span class="op">,</span> {</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>            <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'12px'</span></span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>        }))<span class="op">;</span></span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">4</span><span class="op">,</span> ui<span class="op">.</span><span class="fu">Label</span>(pct_affected<span class="op">.</span><span class="fu">getInfo</span>() <span class="op">+</span> <span class="st">'% of the population in '</span> <span class="op">+</span> selectedName <span class="op">+</span> <span class="st">' live on highly degraded land'</span><span class="op">,</span> {</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>            <span class="dt">fontSize</span><span class="op">:</span> <span class="st">'12px'</span></span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>        }))<span class="op">;</span></span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">5</span><span class="op">,</span> chart1)<span class="op">;</span></span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>        rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">6</span><span class="op">,</span> chart2)<span class="op">;</span></span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Last but not least, we created a <strong>Clear</strong> button to remove the drawn polygon, and a <strong>Reset</strong> button to reset the map to the initial state.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Add Clear Geom button</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> clearButton <span class="op">=</span> ui<span class="op">.</span><span class="fu">Button</span>({</span>
@@ -604,14 +614,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/clipboard-3754887948.png" class="img-fluid figure-img" width="2504"></p>
+<p><img src="images/clipboard-1143629683.png" class="img-fluid figure-img" width="1000"></p>
 <figcaption class="figure-caption">The app’s UI after the year and area of interest have been indicated</figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="iv.-references" class="level1">
-<h1>IV. References</h1>
+<section id="iv.-references" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-references">IV. References</h2>
 <p>USGS: Landsat Missions (n.d.). Landsat Modified Soil Adjusted Vegetation Index | U.S. Geological Survey. [online] www.usgs.gov. Available at: https://www.usgs.gov/landsat-missions/landsat-modified-soil-adjusted-vegetation-index [Accessed 21 Apr.&nbsp;2024].</p>
 <p>Yale (n.d.). How to convert Landsat DNs to albedo | Center for Earth Observation. [online] Center for Earth Observation. Available at: https://yceo.yale.edu/how-convert-landsat-dns-albedo [Accessed 21 Apr.&nbsp;2024].</p>
 <p>Yang, Z., Gao, X., Lei, J., Meng, X. and Zhou, N. (2022). Analysis of spatiotemporal changes and driving factors of desertification in the Africa Sahel. CATENA, 213, p.106213. doi:https://doi.org/10.1016/j.catena.2022.106213.</p>
@@ -619,6 +629,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Wu, Z., Lei, S., Bian, Z.&nbsp;<em>et al.</em>&nbsp;Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region.&nbsp;<em>Environ Earth Sci</em>&nbsp;78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

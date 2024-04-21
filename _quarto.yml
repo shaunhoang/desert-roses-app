@@ -3,20 +3,20 @@ project:
   output-dir: docs
 
 book:
-  title: "CASA0025 Final Assessment"
-  author: "MASH Potatoes - Desert Rose"
+  title: "Project Desert Rose: Monitoring desertification risk areas in Niger"
+  author: "MASH Potatoes"
   date: "22/04/2024"
   chapters:
     - index.qmd
-
   favicon: "images/circl-logo.png"
 
 format:
   html:
     theme:
-      light: cosmo
-      dark: darkly
+      light: [journal]
+      dark: [journal,darkly]
     code-copy: true
+    code-link: true
     code-overflow: wrap
     highlight-style: monokai.theme
     linkcolor: "#34a832"
