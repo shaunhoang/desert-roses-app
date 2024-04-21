@@ -8,7 +8,7 @@ title: Project Desert Rose - Identifying desertification risk areas in Niger
 
 ### Problem Statement
 
-Niger, a landlocked country in Africa's Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.
+Niger, a landlocked country in Africa's Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) aim to restore degraded land and push back the desert.
 
 However, as each task force operates independently, the nation lacks centralised visibility on nationwide desertification risks, making it difficult to mobilise the action plan with urgency and prioritise resources across diverse actors to the communities most in need.
 
@@ -28,35 +28,7 @@ Three remote sensing Google Earth Engine data sets are used:
 
 ### Methodology
 
-According to Wu et al. (2019) and Wen et al. (2020), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. Furthermore, Yang et al (2022) identify that the combined albedo-MSAVI formula is optimal for identifying desertification in the Sahel region.
-
-#### Albedo
-
-Albedo is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps understand the Earth's energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). The formula for albedo, particularly using Landsat data (as the calculation can vary based on sensor and land type), involves a weighted combination of spectral bands B2 (Blue), B4 (Red), B5 (NIR), B6 (SWIR1), B7 (SWIR2); these represent different portions of the electromagnetic spectrum (Wu et al., 2019):
-
-According to Wu et al. (2019) and Wen et al. (2020), the Desertification Risk Index (DRI) can be calculated using Landsat 8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were derived.
-
-$$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$
-
-High albedo values correlate with highly reflective surfaces (such as flat desert or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).
-
-| [Higher albedo]{.underline}, in this context, indicates [higher levels of desertification]{.underline}.
-
-#### Modified Soil Adjusted Vegetation Index
-
-The MSAVI is designed to minimise the impact of soil brightness when vegetation is sparse, providing a more accurate vegetation signal. This index is particularly useful in semi-arid regions, such as Niger, where exposed soil can significantly affect the standard vegetation indices like NDVI. It ranges from -1 (non-vegetated areas or sparse vegetation) to 1 (higher levels of vegetation and vegetation health). The formula for MSAVI is:
-
-$$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$
-
-This index uses a quadratic function to reduce the influence of soil background by adjusting the red (B3) and near-infrared (B4) band values. The incorporation of an "inductive L function" in this formula helps to maximise the reduction of soil effects, enhancing the robustness of vegetation monitoring (USGS: Landsat Missions, n.d.; Wu et al., 2019).
-
-We then adapt this by adding 1 to the value and dividing by 2 -- this shifts values to the 0 to 2 range and then standardises to them to the 0 to 1 range (same as albedo).
-
-| [Higher MSAVI]{.underline}, in this context, indicates [lower levels of desertification]{.underline}.
-
-#### Desertification Risk Index (DRI)
-
-The DRI integrates the albedo and MSAVI to assess areas at risk of desertification (adapted from Wu et al., 2019; and Yang et al., 2022). Its composite score effectively synthesises information on both vegetation health and surface reflectivity into a single metric. Due to the opposite direction of each indicator correlating with higher levels of desertification, they need to be transformed so that they are in the same direction, before being weighed and aggregated. As such the formula for DRI is:
+According to Wu et al. (2019) and Yang et al. (2020), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. according to the formula:
 
 $$ DRI = L_1 = \sqrt{(MSAVI-1)^2 + Albedo^2} $$
 
@@ -79,18 +51,18 @@ Finally, other layers of interest are (1) Population density in high-risk areas,
 # The Application
 
 ::: column-page
-<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="125%" height="500px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
 
 </iframe>
 :::
 
-# How it Works
+# The code behind the scene
+
+Here are some highlights of what goes on behind the scene of the web app.
 
 ### Calculating Desertification Risk Index from Land-8 dataset
 
-(Aaron)
-
-First,
+First, we load the necessary Landsat 8 collection and the boundaries of Niger (level 1 and 0)
 
 ``` javascript
 // Load country boundaries
@@ -108,6 +80,22 @@ var composite = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
               ;
 ```
 
+As explained above, the formula for **DRI** is:
+
+$$ DRI = \sqrt{(MSAVI-1)^2 + Albedo^2} $$
+
+where:
+
+-   **Albedo** is a measure of the reflectivity of the Earth's surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps understand the Earth's energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). High albedo values correlate with highly reflective surfaces (such as flat deserts or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).
+
+$$ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 $$
+
+-   **Modified Soil Adjusted Vegetation Index (MSAVI)** is designed to minimise the impact of soil brightness when vegetation is sparse, providing a more accurate vegetation signal. This index is particularly useful in semi-arid regions, such as Niger, where exposed soil can significantly affect the standard vegetation indices like NDVI. Since, it ranges from -1 (non-vegetated areas or sparse vegetation) to 1 (higher levels of vegetation and vegetation health), we adapt this by adding 1 to the value and dividing by 2 to normalise to the 0 to 1 range (same as albedo).
+
+$$ MSAVI = \frac{2B_{nir} + 1 - \sqrt{(2B_{nir} + 1)^2 - 8(B_{nir}-B_{red})}}2 $$
+
+The code below creates a function, which performs the calculation of DRI for the Landsat 8 collection.
+
 ``` js
 // Function to calculate DRI
 var calculateIndices = function(image){
@@ -122,7 +110,7 @@ var calculateIndices = function(image){
   
   // Calculate Albedo
   var albedo = image.expression(
-    '((0.356*B2) + (0.130*B4) + (0.373*B5) + (0.085*B6) + (0.072*B7) - 0.0018)*0.0000275 - 0.2', {
+    '((0.356*B2) + (0.130*B4) + (0.373*B5) + (0.085*B6) + (0.072*B7) - 0.0018)*0.0000275 - 0.2', { // adjustments normalise the index to be 0 to 1
       'B2': image.select('SR_B2'), // Blue
       'B4': image.select('SR_B4'), // Red
       'B5': image.select('SR_B5'), // NIR
@@ -144,11 +132,9 @@ var calculateIndices = function(image){
 };
 ```
 
-Load data
+Before we applied this function to the collection, we decided to simplify the collection to one image per year to reduce load time whenever a query is made. After we applied the index calculation, we masked out DRI values less than 0.5 to highlight areas with high risk of desertification. We also added a legend for the DRI value with a colour scale.
 
 ``` js
-
-              
 // Simplify collection to years (median) and calculate indices 
 var distinctYears = ee.List.sequence(2014, 2023);
 
@@ -171,11 +157,111 @@ function maskByDRI(image) {
 var composite_annual_masked = composite_annual.map(maskByDRI);
 ```
 
+![](images/clipboard-2006573240.png){fig-align="center" width="379"}
+
+``` javascript
+// Color palette to viz params function
+function makeColorBarParams(palette) {
+  return {
+    bbox: [0, 0, 1, 0.1],
+    dimensions: "100x10",
+    format: "png",
+    min: 0,
+    max: 1,
+    palette: palette.reverse(),
+  };
+}
+
+// Create the color bar for the legend.
+var colorBar = ui.Thumbnail({
+  image: ee.Image.pixelLonLat().select(0),
+  params: makeColorBarParams(colorlist.reverse()),
+  style: { stretch: "horizontal", margin: "0px 2px", maxHeight: "18px" },
+});
+
+// Create title
+var legendTitle = ui.Label({
+  value: "Desertification Risk Index (DRI)",
+  style: { fontWeight: "bold" ,textAlign: "center",stretch: "horizontal"},
+});
+
+// Create labels
+var legendLabels = ui.Panel({
+  widgets: [
+    ui.Label('Low', { margin: "4px 4px" }),
+    ui.Label( " ", {
+      margin: "4px 4px",
+      textAlign: "center",
+      stretch: "horizontal",
+    }),
+    ui.Label('High', { margin: "4px 4px" }),
+  ],
+  layout: ui.Panel.Layout.flow("horizontal"),
+});
+
+// Put everything together and add to map
+var legendPanel = ui.Panel({
+  widgets: [legendTitle, colorBar, legendLabels],
+  style: { position: "bottom-center", width: "300px"},
+});
+
+Map.add(legendPanel)
+```
+
+![](images/clipboard-864733451.png){fig-align="center" width="258"}
+
+Finally, to show the change in DRI in the past decade, we also produced a layer for the difference in the DRI across all pixels between 2023 and 2014. From this layer (more white means higher increase in DRI), it is clear to see rapid desertification around the population centres such as Niamey in the southern region. However, areas in the southeastern region around Lake Chad and on the western border with Mali, there seems to be a reversal of desertification.
+
+``` javascript
+// Difference in DRI between 2023 and 2014
+var image2014 = composite_annual.select('DRI').filterDate('2014-01-01', '2014-12-31').median();
+var image2023 = composite_annual.select('DRI').filterDate('2023-01-01', '2023-12-31').median();
+
+// Calculate the difference image
+var differenceImage = image2023.subtract(image2014);
+var diff_img = differenceImage.updateMask(differenceImage.gt(0.01).or(differenceImage.lt(-0.01)
+));
+```
+
+![](images/clipboard-2172427467.png){fig-align="center" width="383"}
+
 ### Estimating the affected population using the WorldPop dataset
 
-Explain the code to mask DRI layer + Population to identify high-risk populated areas to produce stats
+Showing the desertification level layer alone is not insightful for the user as most of the country's land cover is dominated by the existing Sahara desert that is uninhabited. Therefore, we want to visualise desertification risk only in areas with population by intersecting the newly created DRI later with the population density layer (WorldPop Population estimates of 2020 used as this was the most recent)
+
+``` javascript
+// Population Raster from WorldPop
+var pop_agesex = ee.ImageCollection('WorldPop/GP/100m/pop_age_sex')
+          .filter(ee.Filter.eq('country', 'NER'))
+          .filter(ee.Filter.calendarRange(2020, 2020, 'year')) //2020 latest year for WorldPop 
+
+// Mask out uninhabited land
+function maskZeroValues(image) {
+  return image.updateMask(image.select('population').gt(0.025)); // Mask where values 
+}
+var pop_agesex_masked = pop_agesex.map(maskZeroValues);
+
+
+// Find intersection (affected population)
+var dri_masked = composite_annual_masked.select('DRI')
+                   .filter(ee.Filter.eq('year',2023))
+                   .first(); // Default year 2023
+                   
+// Create intersection image for population density
+var intersectionMask = pop_agesex_masked.first().mask().and(dri_masked.mask()); 
+var intersectionImage = pop_agesex_masked.first().updateMask(intersectionMask);
+// Create intersection image for DRI
+var intersectionMask_DRI = dri_masked.mask().and(pop_agesex_masked.select('population').first().mask()); 
+var intersectionImage_DRI = dri_masked.updateMask(intersectionMask_DRI);
+```
+
+This code results in the creation of 2 layers that highlight the extent of desertification specifically in populated areas, one shows the DRI values and the other shows the population density.
+
+![Desertification in populated areas (i.e. High-risk areas). Left: By DRI values . Right: By Population Density.](images/clipboard-3677790972.png){width="1285"}
 
 ### Statistics and graphs for the year and area of interest
+
+Besides producing the layers, the app affords users with key interaction components such as zooming into the year and area of interest, from which relevant stats and graphs are produced. For the interface we used a split-panel approach.
 
 The left-hand panel allows the user to pick the year of interest via a slider
 
@@ -208,7 +294,7 @@ function updateLayer() {
 
 The left-hand panel also enables the user to select an area of interest in one of two ways:
 
-1.  the dropdown menu allows you to click on one of the 8 administrative regions within the country
+1.  The dropdown menu allows you to click on one of the 8 administrative regions within the country
 
 ``` js
 // Extract names
@@ -240,7 +326,7 @@ var dropdown_menu = ui.Select({
 });
 ```
 
-2.  the user can choose to draw a point-based polygon directly onto the map. Enabling this option allows users to zoom into particular areas that are otherwise not distinguishable by region. This is complete with a Clear button to remove the drawn polygon, and a Reset button to reset everything to the initial state.
+2.  The user can choose to draw a point-based polygon directly onto the map to zoom into particular areas that are otherwise not distinguishable by region. This is complete with a Clear button to remove the drawn polygon, and a Reset button to reset everything to the initial state.
 
 ``` js
 // Add in draw polygon feature
@@ -381,57 +467,6 @@ dropdown.widgets().get(1).onChange(function(selectedName){
       rightPanel.widgets().set(6,chart2);
   });
 });
-```
-
-Finally, a legend bar for the DRI is created
-
-``` javascript
- // Color palette to viz params function
-function makeColorBarParams(palette) {
-  return {
-    bbox: [0, 0, 1, 0.1],
-    dimensions: "100x10",
-    format: "png",
-    min: 0,
-    max: 1,
-    palette: palette.reverse(),
-  };
-}
-
-// Create the color bar for the legend.
-var colorBar = ui.Thumbnail({
-  image: ee.Image.pixelLonLat().select(0),
-  params: makeColorBarParams(colorlist.reverse()),
-  style: { stretch: "horizontal", margin: "0px 2px", maxHeight: "18px" },
-});
-
-// Create title
-var legendTitle = ui.Label({
-  value: "Desertification Risk Index (DRI)",
-  style: { fontWeight: "bold" ,textAlign: "center",stretch: "horizontal"},
-});
-
-// Create labels
-var legendLabels = ui.Panel({
-  widgets: [
-    ui.Label('Low', { margin: "4px 4px" }),
-    ui.Label( " ", {
-      margin: "4px 4px",
-      textAlign: "center",
-      stretch: "horizontal",
-    }),
-    ui.Label('High', { margin: "4px 4px" }),
-  ],
-  layout: ui.Panel.Layout.flow("horizontal"),
-});
-
-// Put everything together and add to map
-var legendPanel = ui.Panel({
-  widgets: [legendTitle, colorBar, legendLabels],
-  style: { position: "bottom-center", width: "350px"},
-});
-
-Map.add(legendPanel)
 ```
 
 # References
