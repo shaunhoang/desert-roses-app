@@ -138,23 +138,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="problem-statement" class="level3">
 <h3 class="anchored" data-anchor-id="problem-statement">Problem Statement</h3>
 <p>Niger, a landlocked country in Africa’s Sahel region, faces rising temperatures, low rainfall and a decrease in arable land, indicative of desertification. The shrinking land and water sources pose food and water security threats, risking humanitarian crises and conflicts. Initiatives like Action Against Desertification (FAO-UN) and regional projects (FLEUVE, BRICKS) aim to restore degraded land and push back the desert.</p>
-<p>However, as each task force operates independently, the nation lacks centralised visibility on desertification risks to mobilise the GGW action plan with urgency and prioritise resources systematically across diverse actors.</p>
+<p>However, as each task force operates independently, the nation lacks centralised visibility on nationwide desertification risks, making it difficult to mobilise the action plan with urgency and prioritise resources across diverse actors to the communities most in need.</p>
 </section>
 <section id="end-user" class="level3">
 <h3 class="anchored" data-anchor-id="end-user">End User</h3>
-<p>This application is meant for the local government, NGOs and the different organisations involved in the Great Green Wall initiative so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution.</p>
-<p>Future extensions of the tool include highlighting specific areas within the designated Great Green Wall path that are most suitable for planting trees and soil-enriching crops, making the insights more actionable for the implementing task forces and farmers nationwide.</p>
+<p>This application is meant for the local government, NGOs and different organisations so that there is a centralised platform where they can visualise to what extent desertification affects Niger people at high spatial resolution and which areas are seeing desertification worsen over the past decade.</p>
 </section>
 <section id="data-source" class="level3">
 <h3 class="anchored" data-anchor-id="data-source">Data Source</h3>
-<p>To derive the <em>Desertification Index (</em>detailed methodology below), we used <em>Landsat 8 OLI data (2013-present)</em> for hyperspectral remote sensing data containing all the necessary spectral bands. Furthermore, to quantify the affected population, we used the <em>WorldPop global population raster data at 100m resolution (2000-2020</em>). Finally, to delineate the boundaries of interest, we will use <em>Niger Administrative Boundaries, Level 0 through 2.</em></p>
+<p>Three remote sensing Google Earth Engine data sets are used:</p>
+<ul>
+<li><p>To derive the <em>Desertification Risk Index (</em>detailed methodology below), we used <em>Landsat 8 OLI</em> hyperspectral remote sensing data (<em>2014-2023)</em> containing all the necessary spectral bands for index calculation.</p></li>
+<li><p>To quantify the affected population, we used the <em>WorldPop global population raster data at 100m resolution (2000-2020</em>).</p></li>
+<li><p>Finally, to delineate the boundaries of interest, we will use <em>Niger Administrative Boundaries, Level 0 and Level 1.</em></p></li>
+</ul>
 </section>
 <section id="methodology" class="level3">
 <h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
+<<<<<<< Updated upstream
 <p>According to Wu et al.&nbsp;(2019), the Desertification Risk Index (DRI), which we have extracted from their Desert Matter Index (DMI), can be calculated using Landsat-8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were calculated. Furthermore, Yang et al (2022) identify that the combined albedo-MSAVI formula is most optimal for identifying desertification in the Sahel region.</p>
 <section id="albedo" class="level4">
 <h4 class="anchored" data-anchor-id="albedo">Albedo</h4>
 <p>Albedo is a measure of the reflectivity of the Earth’s surface, ranging from 0 (no reflectivity) to 1 (total reflectivity). It helps in understanding the Earth’s energy balance as it indicates how much solar radiation is absorbed versus reflected back into space (Yale, n.d.). The formula for albedo, particularly using Landsat data (as the calculation can vary based on sensor and land type), involves a weighted combination of spectral bands B2 (Blue), B4 (Red), B5 (NIR), B6 (SWIR1), B7 (SWIR2); these represent different portions of the electromagnetic spectrum (Wu et al., 2019):</p>
+=======
+<p>According to Wu et al.&nbsp;(2019) and Wen et al.&nbsp;(2020), the Desertification Risk Index (DRI) can be calculated using Landsat 8 remote sensing data, from which Albedo and Modified Soil Adjusted Vegetation Index (MSAVI) were derived.</p>
+>>>>>>> Stashed changes
 <p><span class="math display">\[ Albedo = 0.356B_{blue} + 0.13B_{red} + 0.373B_{nir} + 0.085B_{swir1} + 0.072B_{swir2} - 0.0018 \]</span></p>
 <p>High albedo values correlate with highly reflective surfaces (such as flat desert or snow terrains); low values correlate with poorly reflecting surfaces (such as dense forestation).</p>
 <p><u>Higher albedo</u>, in this context, indicates <u>higher levels of desertification</u>.</p>
@@ -183,13 +191,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
-<p>First, the user picks the <em>year of interest</em> using a slider. This will produce populated areas with high desertification risks. To acquire statistics on the extent of human impact, the user can choose a <em>region of interest</em> from the drop-down menu or draw the area of interest using the tool provided, to know the population share that lives on degraded land.</p>
+<p>The user can select the <em>year of interest</em> and then the <em>area of interest</em> to produce various map layers and statistics:</p>
+<ul>
+<li><p>By default, the map of high-risk areas will be shown, indicating the desertification level only in populated areas, excluding uninhabited lands such as the inner section of the Sahara Desert to the north.</p></li>
+<li><p>When a region is selected, or an area of interest is drawn, statistics on the average DRI value and the percentage of the affected population will be shown. The user can redraw the area or reset the map anytime.</p></li>
+</ul>
+<p>Finally, other layers of interest are (1) Population density in high-risk areas, (2) DRI nationwide in the year of choice, and (3) Change in DRI nationwide 2014-2023.</p>
 </section>
 </section>
 <section id="the-application" class="level1 page-columns page-full">
 <h1>The Application</h1>
 <div class="column-page">
-<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="130%" height="600px">
+<iframe src="https://ee-shaunhoang.projects.earthengine.app/view/project-desert-rose" width="125%" height="500px">
 </iframe>
 </div>
 </section>
@@ -197,27 +210,324 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>How it Works</h1>
 <section id="calculating-desertification-risk-index-from-land-8-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-desertification-risk-index-from-land-8-dataset">Calculating Desertification Risk Index from Land-8 dataset</h3>
-<p>Explain the DRI calculation + the transformation we made to normalise the indices…</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span>)<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">3000</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(Aaron)</p>
+<p>First,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Load country boundaries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> niger <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(<span class="st">"FAO/GAUL/2015/level0"</span>)<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'ADM0_CODE'</span><span class="op">,</span> <span class="dv">181</span>))<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> niger_1 <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(<span class="st">"FAO/GAUL/2015/level1"</span>)<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'ADM0_CODE'</span><span class="op">,</span> <span class="dv">181</span>))<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> nigerGeometry <span class="op">=</span> niger<span class="op">.</span><span class="fu">geometry</span>()<span class="op">;</span> <span class="co">// Convert niger to a geometry for clipping.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">centerObject</span>(niger<span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span> <span class="co">// Center the map over Niger</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'HYBRID'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Load and filter collection for time period, extent, indices and cloud cover,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> composite <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC08/C02/T1_L2'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span><span class="fu">filterDate</span>(<span class="st">'2014-01-01'</span><span class="op">,</span><span class="st">'2023-12-31'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span><span class="fu">filterBounds</span>(niger)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>              <span class="op">.</span><span class="fu">select</span>([<span class="st">'SR_B[0-9]*'</span>])</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>              <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Function to calculate DRI</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> calculateIndices <span class="op">=</span> <span class="kw">function</span>(image){</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate MSAVI</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> msavi <span class="op">=</span> image<span class="op">.</span><span class="fu">expression</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'(((2 * B5 + 1 - sqrt((2 * B5 + 1)**2 - 8 * (B5 - B4))) / 2) +1)/2'</span><span class="op">,</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B5'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B5'</span>)<span class="op">,</span> <span class="co">// NIR</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B4'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B4'</span>)  <span class="co">// Red</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">rename</span>(<span class="st">'msavi'</span>)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// MSAVI is the Modified Soil Adjusted Vegetation Index; minimizes the effect of bare soil on the SAVI. Refer to Yang et al (2022).</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// This equation modifies the typical equation to account for the typical MSAVI range being -1:1; this adapts it to 0:1 by adding 1 to the value and dividing by 2. </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate Albedo</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> albedo <span class="op">=</span> image<span class="op">.</span><span class="fu">expression</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'((0.356*B2) + (0.130*B4) + (0.373*B5) + (0.085*B6) + (0.072*B7) - 0.0018)*0.0000275 - 0.2'</span><span class="op">,</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B2'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B2'</span>)<span class="op">,</span> <span class="co">// Blue</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B4'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B4'</span>)<span class="op">,</span> <span class="co">// Red</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B5'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B5'</span>)<span class="op">,</span> <span class="co">// NIR</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B6'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B6'</span>)<span class="op">,</span> <span class="co">// SWIR1</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B7'</span><span class="op">:</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'SR_B7'</span>)  <span class="co">// SWIR2</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">rename</span>(<span class="st">'albedo'</span>)<span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ALbedo gives the proportion of the incident light or radiation that is reflected by a surface. Refer to Yang et al (2022).</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate DRI</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> dri <span class="op">=</span> image<span class="op">.</span><span class="fu">expression</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sqrt( (MSAVI - 1)**2 + (Albedo)**2 )'</span><span class="op">,</span> {</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">'MSAVI'</span><span class="op">:</span> msavi<span class="op">,</span> <span class="co">// Use the MSAVI band calculated previously</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">'Albedo'</span><span class="op">:</span> albedo <span class="co">// Use the Albedo band calculated previously</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">rename</span>(<span class="st">'DRI'</span>)<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// DRI formula extracted from Wen et al (2020) and adapted slightly; uses DMI formula</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Return the image with added DRI band</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">addBands</span>([dri<span class="op">,</span> msavi<span class="op">,</span> albedo])<span class="op">.</span><span class="fu">clip</span>(nigerGeometry)<span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Load data</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Simplify collection to years (median) and calculate indices </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> distinctYears <span class="op">=</span> ee<span class="op">.</span><span class="at">List</span><span class="op">.</span><span class="fu">sequence</span>(<span class="dv">2014</span><span class="op">,</span> <span class="dv">2023</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">annualComposite</span>(year<span class="op">,</span> month) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> filteredImages <span class="op">=</span> composite<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">calendarRange</span>(year<span class="op">,</span> year<span class="op">,</span> <span class="st">'year'</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> filteredImages<span class="op">.</span><span class="fu">median</span>()<span class="op">.</span><span class="fu">set</span>({ <span class="st">'year'</span><span class="op">:</span> year<span class="op">,</span> <span class="st">'system:time_start'</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(year<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>)} )<span class="op">;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> composite_annual <span class="op">=</span> ee<span class="op">.</span><span class="at">ImageCollection</span><span class="op">.</span><span class="fu">fromImages</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       distinctYears<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(year) {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>         <span class="cf">return</span> <span class="fu">annualComposite</span>(year)<span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>       })<span class="op">.</span><span class="fu">flatten</span>()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)<span class="op">.</span><span class="fu">map</span>(calculateIndices)<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Mask images based on DRI values, highlighted high DRI areas only</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">maskByDRI</span>(image) {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> driMask <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">.</span><span class="fu">gte</span>(<span class="fl">0.5</span>)<span class="op">;</span> </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">updateMask</span>(driMask)<span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> composite_annual_masked <span class="op">=</span> composite_annual<span class="op">.</span><span class="fu">map</span>(maskByDRI)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="estimating-the-affected-population-using-the-worldpop-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="estimating-the-affected-population-using-the-worldpop-dataset">Estimating the affected population using the WorldPop dataset</h3>
 <p>Explain the code to mask DRI layer + Population to identify high-risk populated areas to produce stats</p>
 </section>
-<section id="user-interface" class="level3">
-<h3 class="anchored" data-anchor-id="user-interface">User Interface</h3>
-<p>Use this section to explain interactive components:</p>
-<ul>
-<li><p>Split panels</p></li>
-<li><p>Dropdown menu</p></li>
-<li><p>Draw polygons</p></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">setCenter</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">;</span>  <span class="bu">Map</span><span class="op">.</span><span class="fu">setOptions</span>(<span class="st">"satellite"</span>)<span class="op">;</span>  <span class="kw">var</span> aoi <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>(<span class="fl">35.51898</span><span class="op">,</span> <span class="fl">33.90153</span>)<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">3000</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can include images:</p>
+<section id="statistics-and-graphs-for-the-year-and-area-of-interest" class="level3">
+<h3 class="anchored" data-anchor-id="statistics-and-graphs-for-the-year-and-area-of-interest">Statistics and graphs for the year and area of interest</h3>
+<p>The left-hand panel allows the user to pick the year of interest via a slider</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Create the Year Slider</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> YearLabel <span class="op">=</span> ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Year'</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> Yearslider <span class="op">=</span> ui<span class="op">.</span><span class="fu">Slider</span>({<span class="dt">min</span><span class="op">:</span><span class="dv">2014</span><span class="op">,</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">max</span><span class="op">:</span><span class="dv">2023</span><span class="op">,</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">value</span><span class="op">:</span><span class="dv">2023</span><span class="op">,</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">step</span><span class="op">:</span><span class="dv">1</span><span class="op">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">onChange</span><span class="op">:</span> updateLayer</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Yearslider<span class="op">.</span><span class="fu">style</span>()<span class="op">.</span><span class="fu">set</span>(<span class="st">'stretch'</span><span class="op">,</span> <span class="st">'horizontal'</span>)<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Formula to update the layer upon year change</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">updateLayer</span>() {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> selectedYear <span class="op">=</span> Yearslider<span class="op">.</span><span class="fu">getValue</span>()<span class="op">;</span> <span class="co">// Get the full date object</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> filteredImage_DRI <span class="op">=</span> composite_annual_masked<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                          <span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'year'</span><span class="op">,</span>selectedYear))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                          <span class="op">.</span><span class="fu">first</span>()<span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> intersectionMask <span class="op">=</span> pop_agesex_masked<span class="op">.</span><span class="fu">first</span>()<span class="op">.</span><span class="fu">mask</span>()<span class="op">.</span><span class="fu">and</span>(dri_masked<span class="op">.</span><span class="fu">mask</span>())<span class="op">;</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> intersectionImage <span class="op">=</span> pop_agesex_masked<span class="op">.</span><span class="fu">first</span>()<span class="op">.</span><span class="fu">updateMask</span>(intersectionMask)<span class="op">;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Update the existing layer every time a new year is chosen</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Map</span><span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">0</span><span class="op">,</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(intersectionImage<span class="op">,</span>{}<span class="op">,</span> <span class="st">'High-risk areas (Pop. Density) in '</span><span class="op">+</span>selectedYear<span class="op">,</span><span class="kw">false</span>))<span class="op">;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Map</span><span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">1</span><span class="op">,</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(intersectionImage_DRI<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">,</span>driVisParams<span class="op">,</span> <span class="st">'High-risk areas (DRI) in '</span><span class="op">+</span>selectedYear))<span class="op">;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Map</span><span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">2</span><span class="op">,</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(filteredImage_DRI<span class="op">.</span><span class="fu">reduce</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>())<span class="op">,</span> driVisParams<span class="op">,</span><span class="st">'Overall Desertification Level in '</span><span class="op">+</span>selectedYear<span class="op">,</span><span class="kw">false</span>))<span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The left-hand panel also enables the user to select an area of interest in one of two ways:</p>
+<ol type="1">
+<li>the dropdown menu allows you to click on one of the 8 administrative regions within the country</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Extract names</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> namesList <span class="op">=</span> niger_1<span class="op">.</span><span class="fu">aggregate_array</span>(<span class="st">'ADM1_NAME'</span>)<span class="op">.</span><span class="fu">getInfo</span>()<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>namesList <span class="op">=</span> namesList<span class="op">.</span><span class="fu">filter</span>(<span class="kw">function</span>(name){<span class="cf">return</span> name <span class="op">!==</span><span class="kw">null</span> <span class="op">&amp;&amp;</span> name <span class="op">!==</span><span class="st">""</span><span class="op">;</span>})<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Create dropdown </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> dropdown_menu <span class="op">=</span> ui<span class="op">.</span><span class="fu">Select</span>({</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">items</span><span class="op">:</span> namesList<span class="op">,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">placeholder</span><span class="op">:</span> <span class="st">'Select a region'</span><span class="op">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">onChange</span><span class="op">:</span> <span class="kw">function</span>(selectedName){</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="op">!</span>selectedName){</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>(<span class="st">'No region selected or invalid selection.'</span>)<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> selectedFeature <span class="op">=</span> niger_1<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'ADM1_NAME'</span><span class="op">,</span>selectedName))<span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      selectedFeature<span class="op">.</span><span class="fu">geometry</span>()<span class="op">.</span><span class="fu">evaluate</span>(<span class="kw">function</span>(geometry){</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">//zoom to the region</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>          <span class="bu">Map</span><span class="op">.</span><span class="fu">centerObject</span>(ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span><span class="fl">6.5</span>)<span class="op">;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>          <span class="co">//highlight the selected region</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>          <span class="kw">var</span> region_outline <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>()<span class="op">.</span><span class="fu">byte</span>()<span class="op">.</span><span class="fu">paint</span>({</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">featureCollection</span><span class="op">:</span> selectedFeature<span class="op">,</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">width</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">color</span><span class="op">:</span> <span class="st">'purple'</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                                })<span class="op">;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>          <span class="bu">Map</span><span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">5</span><span class="op">,</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Layer</span>(region_outline<span class="op">,</span>{}<span class="op">,</span> <span class="st">'Region: '</span><span class="op">+</span> selectedName))<span class="op">;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>the user can choose to draw a point-based polygon directly onto the map. Enabling this option allows users to zoom into particular areas that are otherwise not distinguishable by region. This is complete with a Clear button to remove the drawn polygon, and a Reset button to reset everything to the initial state.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Add in draw polygon feature</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> drawingTools <span class="op">=</span> <span class="bu">Map</span><span class="op">.</span><span class="fu">drawingTools</span>()<span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>drawingTools<span class="op">.</span><span class="fu">setShown</span>(<span class="kw">false</span>)<span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> drawButton <span class="op">=</span> ui<span class="op">.</span><span class="fu">Button</span>({</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"✏️"</span> <span class="op">+</span> <span class="st">" Draw an area"</span><span class="op">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">onClick</span><span class="op">:</span> drawPolygon<span class="op">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> { <span class="dt">stretch</span><span class="op">:</span> <span class="st">"horizontal"</span><span class="op">,</span><span class="dt">color</span><span class="op">:</span><span class="st">'F08F42'</span> }</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">drawPolygon</span>() {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>          <span class="co">// Clear geoms</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>          <span class="kw">var</span> layers <span class="op">=</span> <span class="bu">Map</span><span class="op">.</span><span class="fu">drawingTools</span>()<span class="op">.</span><span class="fu">layers</span>()<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>          layers<span class="op">.</span><span class="fu">reset</span>()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>          <span class="co">// draw</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>          drawingTools<span class="op">.</span><span class="fu">setShape</span>(<span class="st">"polygon"</span>)<span class="op">;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>          drawingTools<span class="op">.</span><span class="fu">draw</span>()<span class="op">;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">// Add Clear Geom button</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> clearButton <span class="op">=</span> ui<span class="op">.</span><span class="fu">Button</span>({</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">'Clear'</span><span class="op">,</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">onClick</span><span class="op">:</span> clearGeometryAndDisableDrawing</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">clearGeometryAndDisableDrawing</span>() {</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> layers <span class="op">=</span> <span class="bu">Map</span><span class="op">.</span><span class="fu">drawingTools</span>()<span class="op">.</span><span class="fu">layers</span>()<span class="op">;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  layers<span class="op">.</span><span class="fu">reset</span>()<span class="op">;</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">drawingTools</span>()<span class="op">.</span><span class="fu">setShape</span>(<span class="kw">null</span>)<span class="op">;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Add Reset button to initial state</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> resetButton <span class="op">=</span> ui<span class="op">.</span><span class="fu">Button</span>({</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">'Reset'</span><span class="op">,</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">onClick</span><span class="op">:</span> reset</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">reset</span>() {</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> layerToRemove <span class="op">=</span> <span class="bu">Map</span><span class="op">.</span><span class="fu">layers</span>()<span class="op">.</span><span class="fu">get</span>(<span class="dv">5</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(layerToRemove){<span class="bu">Map</span><span class="op">.</span><span class="fu">remove</span>(layerToRemove)}</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  dropdown_menu<span class="op">.</span><span class="fu">setValue</span>(<span class="kw">null</span>)<span class="op">;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">centerObject</span>(niger<span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clearGeometryAndDisableDrawing</span>()</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once an area of interest has been identified, the right-hand panel will generate the relevant stats and graphs related to the desertification index (as shown on the map), population growth, and the percentage of the population that live in desertified land. The example below is the callback function for the dropdown menu, sharing similar callbacks as the drawing tool.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Set a callback function for when the user selects a boundary</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dropdown<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">get</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">onChange</span>(<span class="kw">function</span>(selectedName){</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="op">!</span>selectedName){</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">'No region selected or invalid selection.'</span>)<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span><span class="op">;</span>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> selectedBoundary <span class="op">=</span> niger_1<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'ADM1_NAME'</span><span class="op">,</span> selectedName))<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  selectedBoundary<span class="op">.</span><span class="fu">geometry</span>()<span class="op">.</span><span class="fu">evaluate</span>(<span class="kw">function</span>(geometry){</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">//Chart of DRI over time</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> chart1 <span class="op">=</span> ui<span class="op">.</span><span class="at">Chart</span><span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">series</span>({</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">imageCollection</span><span class="op">:</span>composite_annual<span class="op">.</span><span class="fu">select</span>(<span class="st">'DRI'</span>)<span class="op">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">region</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">scale</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      })<span class="op">.</span><span class="fu">setOptions</span>({</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">title</span><span class="op">:</span> <span class="st">'DRI change over time'</span><span class="op">,</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">vAxis</span><span class="op">:</span>{<span class="dt">title</span><span class="op">:</span> <span class="st">'DRI'</span>}<span class="op">,</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">lineWidth</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">color</span><span class="op">:</span> <span class="st">'E35F27'</span><span class="op">,</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">pointSize</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Chart of population over time for the selected region.</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> chart2 <span class="op">=</span> ui<span class="op">.</span><span class="at">Chart</span><span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">series</span>({</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>          <span class="dt">imageCollection</span><span class="op">:</span> pop_masked<span class="op">,</span> </span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>          <span class="dt">region</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span> </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>          <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>          <span class="dt">scale</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>          <span class="dt">xProperty</span><span class="op">:</span> <span class="st">'year'</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        })<span class="op">.</span><span class="fu">setSeriesNames</span>([<span class="st">'Pop'</span>]) </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>          <span class="op">.</span><span class="fu">setOptions</span>({</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>          <span class="dt">title</span><span class="op">:</span> <span class="st">'Population growth in selected area'</span><span class="op">,</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>          <span class="dt">vAxis</span><span class="op">:</span> {<span class="dt">title</span><span class="op">:</span> <span class="st">'Population'</span>}<span class="op">,</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>          <span class="dt">hAxis</span><span class="op">:</span> {<span class="dt">title</span><span class="op">:</span> <span class="st">'Year'</span>}<span class="op">,</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>          <span class="dt">lineWidth</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>          <span class="dt">pointSize</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>          <span class="dt">series</span><span class="op">:</span> {</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>          <span class="dv">0</span><span class="op">:</span> {<span class="dt">color</span><span class="op">:</span> <span class="st">'orange'</span>} </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Print the avg DRI value</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> driValue <span class="op">=</span> composite_annual</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>                              <span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'year'</span><span class="op">,</span>Yearslider<span class="op">.</span><span class="fu">getValue</span>())) <span class="co">// selected year</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>                              <span class="op">.</span><span class="fu">median</span>()</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>                              <span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">reducer</span><span class="op">:</span>ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">geometry</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">scale</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">bestEffort</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>                                            })</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>                              <span class="op">.</span><span class="fu">get</span>(<span class="st">'DRI'</span>)<span class="op">;</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> round_driValue<span class="op">=</span> (ee<span class="op">.</span><span class="fu">Number</span>(driValue)<span class="op">.</span><span class="fu">multiply</span>(<span class="dv">1000</span>))<span class="op">.</span><span class="fu">round</span>()<span class="op">.</span><span class="fu">divide</span>(<span class="dv">1000</span>)<span class="op">.</span><span class="fu">getInfo</span>()</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Print the affected pop value</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> sum_pop_affected <span class="op">=</span> intersectionImage<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>        <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>        <span class="dt">geometry</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>        <span class="dt">scale</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="co">// Adjust scale to 100 to fit WorldPop resolution</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>        <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span><span class="op">,</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bestEffort</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="st">'Total population affected:'</span><span class="op">,</span>sum_pop_affected)<span class="op">;</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Print the pop value</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> sum_pop <span class="op">=</span> pop_agesex<span class="op">.</span><span class="fu">median</span>()<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>        <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>        <span class="dt">geometry</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Geometry</span>(geometry)<span class="op">,</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>        <span class="dt">scale</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="co">// Adjust scale to 100 to fit WorldPop resolution</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>        <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span><span class="op">,</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bestEffort</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="st">'Total population:'</span><span class="op">,</span>sum_pop)<span class="op">;</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> pct_affected <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(sum_pop_affected<span class="op">.</span><span class="fu">get</span>(<span class="st">'population'</span>))</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>                         <span class="op">.</span><span class="fu">divide</span>(ee<span class="op">.</span><span class="fu">Number</span>(sum_pop<span class="op">.</span><span class="fu">get</span>(<span class="st">'population'</span>)))</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>                         <span class="op">.</span><span class="fu">multiply</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">round</span>() <span class="co">// Round to 2 decimal places</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>                         <span class="op">.</span><span class="fu">divide</span>(<span class="dv">100</span>)<span class="op">;</span> <span class="co">// get %</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(pct_affected)<span class="op">;</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Add/replace widget</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>      rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">2</span><span class="op">,</span>ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Selected region: '</span><span class="op">+</span> selectedName))<span class="op">;</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>      rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">3</span><span class="op">,</span>ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Average DRI in '</span> <span class="op">+</span> Yearslider<span class="op">.</span><span class="fu">getValue</span>() <span class="op">+</span> <span class="st">' is '</span> <span class="op">+</span> round_driValue))<span class="op">;</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>      rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">4</span><span class="op">,</span>ui<span class="op">.</span><span class="fu">Label</span>(pct_affected<span class="op">.</span><span class="fu">getInfo</span>() <span class="op">+</span> <span class="st">'% of the population in '</span><span class="op">+</span>selectedName<span class="op">+</span> <span class="st">' live on highly degraded land (DRI &gt; 0.5)'</span>))<span class="op">;</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>      rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">5</span><span class="op">,</span>chart1)<span class="op">;</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>      rightPanel<span class="op">.</span><span class="fu">widgets</span>()<span class="op">.</span><span class="fu">set</span>(<span class="dv">6</span><span class="op">,</span>chart2)<span class="op">;</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, a legend bar for the DRI is created</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> <span class="co">// Color palette to viz params function</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">makeColorBarParams</span>(palette) {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bbox</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="fl">0.1</span>]<span class="op">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">dimensions</span><span class="op">:</span> <span class="st">"100x10"</span><span class="op">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">format</span><span class="op">:</span> <span class="st">"png"</span><span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">min</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">max</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">palette</span><span class="op">:</span> palette<span class="op">.</span><span class="fu">reverse</span>()<span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Create the color bar for the legend.</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> colorBar <span class="op">=</span> ui<span class="op">.</span><span class="fu">Thumbnail</span>({</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">image</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelLonLat</span>()<span class="op">.</span><span class="fu">select</span>(<span class="dv">0</span>)<span class="op">,</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> <span class="fu">makeColorBarParams</span>(colorlist<span class="op">.</span><span class="fu">reverse</span>())<span class="op">,</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> { <span class="dt">stretch</span><span class="op">:</span> <span class="st">"horizontal"</span><span class="op">,</span> <span class="dt">margin</span><span class="op">:</span> <span class="st">"0px 2px"</span><span class="op">,</span> <span class="dt">maxHeight</span><span class="op">:</span> <span class="st">"18px"</span> }<span class="op">,</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">// Create title</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> legendTitle <span class="op">=</span> ui<span class="op">.</span><span class="fu">Label</span>({</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="st">"Desertification Risk Index (DRI)"</span><span class="op">,</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> { <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">"bold"</span> <span class="op">,</span><span class="dt">textAlign</span><span class="op">:</span> <span class="st">"center"</span><span class="op">,</span><span class="dt">stretch</span><span class="op">:</span> <span class="st">"horizontal"</span>}<span class="op">,</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">// Create labels</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> legendLabels <span class="op">=</span> ui<span class="op">.</span><span class="fu">Panel</span>({</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">widgets</span><span class="op">:</span> [</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'Low'</span><span class="op">,</span> { <span class="dt">margin</span><span class="op">:</span> <span class="st">"4px 4px"</span> })<span class="op">,</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    ui<span class="op">.</span><span class="fu">Label</span>( <span class="st">" "</span><span class="op">,</span> {</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">margin</span><span class="op">:</span> <span class="st">"4px 4px"</span><span class="op">,</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>      <span class="dt">textAlign</span><span class="op">:</span> <span class="st">"center"</span><span class="op">,</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stretch</span><span class="op">:</span> <span class="st">"horizontal"</span><span class="op">,</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    ui<span class="op">.</span><span class="fu">Label</span>(<span class="st">'High'</span><span class="op">,</span> { <span class="dt">margin</span><span class="op">:</span> <span class="st">"4px 4px"</span> })<span class="op">,</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layout</span><span class="op">:</span> ui<span class="op">.</span><span class="at">Panel</span><span class="op">.</span><span class="at">Layout</span><span class="op">.</span><span class="fu">flow</span>(<span class="st">"horizontal"</span>)<span class="op">,</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">// Put everything together and add to map</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> legendPanel <span class="op">=</span> ui<span class="op">.</span><span class="fu">Panel</span>({</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">widgets</span><span class="op">:</span> [legendTitle<span class="op">,</span> colorBar<span class="op">,</span> legendLabels]<span class="op">,</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> { <span class="dt">position</span><span class="op">:</span> <span class="st">"bottom-center"</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="st">"350px"</span>}<span class="op">,</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="bu">Map</span><span class="op">.</span><span class="fu">add</span>(legendPanel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Screenshot 2024-04-19 205034.png" class="img-fluid figure-img"></p>
@@ -232,6 +542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Yang, Z., Gao, X., Lei, J., Meng, X. and Zhou, N. (2022). Analysis of spatiotemporal changes and driving factors of desertification in the Africa Sahel. CATENA, 213, p.106213. doi:https://doi.org/10.1016/j.catena.2022.106213.</p>
 <p>Wen, Ye &amp; Guo, Bing &amp; Zang, Wenqian &amp; Ge, Dazhuan &amp; Luo, Wei &amp; Zhao, Huihui. (2020). Desertification detection model in Naiman Banner based on the albedo-modified soil adjusted vegetation index feature space using the Landsat8 OLI images. Geomatics, Natural Hazards and Risk. 11. 544-558. 10.1080/19475705.2020.1734100.</p>
 <p>Wu, Z., Lei, S., Bian, Z.&nbsp;<em>et al.</em>&nbsp;Study of the desertification index based on the albedo-MSAVI feature space for semi-arid steppe region.&nbsp;<em>Environ Earth Sci</em>&nbsp;78, 232 (2019). https://doi.org/10.1007/s12665-019-8111-9</p>
+<p>Yang et al (2022</p>
 
 
 </section>
