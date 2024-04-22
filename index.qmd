@@ -514,6 +514,7 @@ function clearGeometryAndDisableDrawing() {
     var layers = Map.drawingTools().layers();
     layers.reset();
     Map.drawingTools().setShape(null);
+    clearRightPanel()
 }
 
 // Add Reset button to initial state
@@ -530,10 +531,18 @@ function reset() {
     dropdown_menu.setValue(null);
     Map.centerObject(niger, 5);
     clearGeometryAndDisableDrawing()
+    clearRightPanel()
+}
+
+function clearRightPanel(){
+    rightPanel.clear();
+    rightPanel.add(intro).add(ui.Label('Choose or draw an area of interest to generate statistics.', {
+        fontSize: '12px'
+    }));
 }
 ```
 
-![The app's UI after the year and area of interest have been indicated](images/clipboard-1143629683.png){width="1000"}
+![The app's UI after the year and area of interest have been indicated](images/clipboard-2479221372.png){width="1000"}
 
 ## IV. References
 
